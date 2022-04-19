@@ -1,15 +1,16 @@
-const sequelize = require('../db');
-const { DataTypes } = require('sequelize');
+const sequelize = require('../db')
+const {DataTypes} = require('sequelize')
 
 const User = sequelize.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    email: {type: DataTypes.STRING, unique: true},
+    email: {type: DataTypes.STRING, unique: true,},
     password: {type: DataTypes.STRING},
-    role: {type: DataTypes.STRING, defaultValue: 'USER'}
+    role: {type: DataTypes.STRING, defaultValue: "USER"},
 })
 
 const Cart = sequelize.define('cart', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    userId: {type: DataTypes.INTEGER, primaryKey: true}
 })
 
 const CartDevice = sequelize.define('cart_device', {
@@ -49,36 +50,42 @@ const TypeBrand = sequelize.define('type_brand', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
-User.hasOne(Cart);
-Cart.belongsTo(User);
 
-User.hasMany(Rating);
-Rating.belongsTo(User);
+User.hasOne(Cart)
+Cart.belongsTo(User)
 
-Cart.hasMany(CartDevice);
-CartDevice.belongsTo(Cart);
+User.hasMany(Rating)
+Rating.belongsTo(User)
 
-Type.hasMany(Device);
-Device.belongsTo(Type);
+Cart.hasMany(CartDevice)
+CartDevice.belongsTo(Cart)
 
-Brand.hasMany(Device);
-Device.belongsTo(Brand);
+Type.hasMany(Device)
+Device.belongsTo(Type)
 
-Device.hasMany(Rating);
-Rating.belongsTo(Device);
+Brand.hasMany(Device)
+Device.belongsTo(Brand)
 
-Device.hasMany(CartDevice);
-CartDevice.belongsTo(Device);
+Device.hasMany(Rating)
+Rating.belongsTo(Device)
+
+Device.hasMany(CartDevice)
+CartDevice.belongsTo(Device)
 
 Device.hasMany(DeviceInfo, {as: 'info'});
-DeviceInfo.belongsTo(Device);
+DeviceInfo.belongsTo(Device)
 
-Type.belongsToMany(Brand, {through: TypeBrand});
-Brand.belongsToMany(Type, {through: TypeBrand});
+Type.belongsToMany(Brand, {through: TypeBrand })
+Brand.belongsToMany(Type, {through: TypeBrand })
 
 module.exports = {
-    User, Cart, CartDevice,
-    Device, Type, Brand,
-    Rating, TypeBrand, DeviceInfo
+    User,
+    Cart,
+    CartDevice,
+    Device,
+    Type,
+    Brand,
+    Rating,
+    TypeBrand,
+    DeviceInfo
 }
-
