@@ -1,8 +1,8 @@
 import { AdminPanel } from './pages/AdminPanel';
 import { Cart } from './pages/Cart';
-import { Shop } from './pages/Shop';
+import { Shop } from './pages/shop/Shop';
 import { Device } from './pages/Device';
-import { Authorisation } from './pages/Authorisation';
+import { Authorisation } from './pages/authorisation/Authorisation';
 
 import { ADMIN_ROUTE, CART_ROUTE, DEVICE_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from './utils/constants';
 
@@ -24,7 +24,7 @@ export const publicRoutes = [
     },
     {
         path: LOGIN_ROUTE,
-        Component: <Cart/>
+        Component: <Authorisation/>
     },
     {
         path: REGISTRATION_ROUTE,
