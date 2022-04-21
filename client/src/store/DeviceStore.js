@@ -4,18 +4,24 @@ export default class DeviceStore {
     constructor() {
         this._types = [
             {id: 1, name: 'Наушники'},
-            {id: 2, name: 'Часы'}
+            {id: 2, name: 'Часы'},
+            {id: 3, name: 'Чехлы'},
+            {id: 4, name: 'Ремешки'},
+            {id: 5, name: 'Беспроводная зарядка'},
+            {id: 6, name: 'PowerBank'},
         ]
         this._brands = [
             {id: 1, name: 'Apple'},
-            {id: 2, name: 'Xiaomi'}
+            {id: 2, name: 'Xiaomi'},
         ]
         this._devices = [
             {id: 1, name: 'Apple Watch 7'},
             {id: 2, name: 'Air Pods 2'},
-            {id: 2, name: 'Air Pods'},
-            {id: 3, name: 'Air Pods Pro'}
+            {id: 3, name: 'Air Pods'},
+            {id: 4, name: 'Air Pods Pro'},
         ]
+        this._selectedType = {}
+        this._selectedBrand = {}
         makeAutoObservable(this)
     }
 
@@ -28,6 +34,12 @@ export default class DeviceStore {
     setDevices(devices) {
         this._devices = devices;
     }
+    setSelectedType(type) {
+        this._selectedType = type
+    }
+    setSelectedBrand(brand) {
+        this._selectedBrand = brand
+    }
 
     get types() {
         return this._types
@@ -37,5 +49,11 @@ export default class DeviceStore {
     }
     get devices() {
         return this._devices
+    }
+    get selectedType() {
+        return this._selectedType
+    }
+    get selectedBrand() {
+        return this._selectedBrand
     }
 }

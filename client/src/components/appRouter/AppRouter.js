@@ -7,7 +7,6 @@ import { Shop } from '../../pages/shop/Shop';
 
 export const AppRouter = () => {
     const {user} = useContext(ThemeContext);
-    console.log(user)
     return (
         <Routes>
             {user.isAuth && authRoutes.map(({ path, Component }) =>

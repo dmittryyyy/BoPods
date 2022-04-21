@@ -7,7 +7,7 @@ import './App.scss';
 export function App() {
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className="App App-init">
         <Header/>
         <AppRouter />
       </div>

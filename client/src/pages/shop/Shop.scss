@@ -1,0 +1,35 @@
+.sidebar {
+    margin-top: 20px;
+    grid-area: menu;
+
+    .sidebarItem {
+        padding: 10px 0;
+    }
+}
+
+.productMain {
+    margin: 20px 10px 0px 10px ;
+    grid-area: content;
+}
+
+.brands {
+    display: flex;
+
+    .brandsItem {
+        margin-right: 10px;
+    }
+}
+
+.productsItem {
+    width: 150px;
+    height: 150px;
+    border: 2px solid black;
+}
+
+.products {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
