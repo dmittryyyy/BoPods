@@ -15,7 +15,7 @@ export default class DeviceStore {
             {id: 2, name: 'Xiaomi'},
         ]
         this._devices = [
-            {id: 1, name: 'Apple Watch 7'},
+            {id: 1, name: 'Apple Watch 7', price: '5000', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCE4pgmmjxgEJLk7mnz1IuJ0n403lhR7c8sw&usqp=CAU'},
             {id: 2, name: 'Air Pods 2'},
             {id: 3, name: 'Air Pods'},
             {id: 4, name: 'Air Pods Pro'},

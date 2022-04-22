@@ -1,6 +1,7 @@
 header {
     background-color: #000;
     grid-area: header;
+    margin-bottom: 30px;
 
     .headerWrapper {
         display: flex;
@@ -9,28 +10,36 @@ header {
     .logo {
         display: flex;
         align-items: center;
+        
 
         img {
             width: 150px;
             border-radius: 80px;
         }
-
-        img:after {
-            content: '______';
-        }
         
-        h1 {
-            color: aliceblue;
-            font-size: 30px;
+        .logoTitle {
+            padding-left: 5px;
+            border-left: 1px solid #888686;
+
+            h1 {
+                color: aliceblue;
+                font-size: 30px;
+            }
+
+            p {
+                color: aliceblue;
+            }
         }
     }
     button {
-        border: 2px solid #9d9a9a;
+        border: 2px solid rgb(134 100 60 / 80%);
         background-color: #FFFFFF;
         font-size: 16px;
         font-weight: 700;
         padding: 5px;
         cursor: pointer;
+        margin-right: 10px;
+        border-radius: 10px;
     }
     button:hover {
         background-color: #bcb9b9;

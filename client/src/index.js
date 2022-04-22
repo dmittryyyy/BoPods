@@ -16,7 +16,7 @@ root.render(
     <ThemeContext.Provider 
     value={{
       user: new UserStore(),
-      device: new DeviceStore()
+      device: new DeviceStore(),
     }}>
       <App />
     </ThemeContext.Provider>

@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { ThemeContext } from '../..';
 
 export const TypeBar = observer ( () => {
@@ -9,8 +9,7 @@ export const TypeBar = observer ( () => {
         <ul className='sidebarItems'>
             {device.types.map(type => 
                 <li
-                className='sidebarItem'
-                style={{cursor: 'pointer'}} 
+                className={type.id === device.selectedType.id ? 'sidebarItemActive' : 'sidebarItem'}
                 key={type.id}
                 onClick={() => device.setSelectedType(type)}
                 >

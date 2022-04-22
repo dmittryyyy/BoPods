@@ -6,16 +6,16 @@ import './Shop.scss';
 
 export const Shop = () => {
   return (
-    <>
+    <div className="wrapperShop">
       <div className='sidebar container'>
         <TypeBar />
       </div>
       <main>
-        <div className='productMain'>
+        <div className='productMain container'>
           <BrandBar />
           <DevicesList />
         </div>
       </main>
-    </>
+    </div>
   )
 }

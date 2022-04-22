@@ -7,10 +7,10 @@ export const BrandBar = observer( () => {
   return (
     <div className='brands'>
         {device.brands.map(brand =>
-            <div key={brand.id} className='brandsItem' 
+            <div key={brand.id} 
+            className={brand.id === device.selectedBrand.id ? 'brandsItemActive' : 'brandsItem'} 
             style={{cursor: "pointer"}}
             onClick={() => device.setSelectedBrand(brand)}
-            border={brand.id === device.selectedBrand.id ? 'danger' : 'light'}
             >
                 {brand.name}
             </div>
