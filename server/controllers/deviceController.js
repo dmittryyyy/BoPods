@@ -1,7 +1,6 @@
 const uuid = require('uuid');
 const path = require('path');
 const { Device, DeviceInfo } = require('../models/models');
-const { nextTick } = require('process');
 const ApiError = require('../error/ApiError');
 
 class DeviceController {
@@ -15,18 +14,18 @@ class DeviceController {
 
             if (info) {
                 info = JSON.parse(info)
-                info.forEach(i => {
+                info.forEach(i =>
                     DeviceInfo.create({
                         title: i.tittle,
                         description: i.description,
                         deviceId: device.id
                     })
-                })
+                )
             }
 
             return res.json(device)
         } catch (e) {
-            nextTick(ApiError.badRequest(e.message));
+            next(ApiError.badRequest(e.message));
         }
     }
     async getAll(req, res) {

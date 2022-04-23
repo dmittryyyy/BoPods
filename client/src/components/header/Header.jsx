@@ -11,6 +11,12 @@ import { ADMIN_ROUTE, LOGIN_ROUTE } from '../../utils/constants';
 export const Header = observer(() => {
   const { user } = useContext(ThemeContext);
   const navigate  = useNavigate();
+
+  const logOut = () => {
+    user.setUser({});
+    user.setIsAuth(false);
+  }
+
   return (
     <header>
       <div className="headerWrapper container">
@@ -25,11 +31,11 @@ export const Header = observer(() => {
           {user.isAuth ? (
             <nav>
               <button onClick={() => navigate(ADMIN_ROUTE)}>Администратор</button>
-              <button onClick={() => navigate(LOGIN_ROUTE)}>Выйти</button>
+              <button onClick={() => logOut()}>Выйти</button>
             </nav>
           ) : (
             <nav>
-              <button onClick={() => user.setIsAuth(true)}>Авторизация</button>
+              <button onClick={() => navigate(LOGIN_ROUTE)}>Авторизация</button>
             </nav>
           )}
         </div>

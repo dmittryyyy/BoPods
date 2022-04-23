@@ -7,7 +7,7 @@ export const DeviceItem = ({ device }) => {
   return (
     <div className='productsItem' onClick={() => navigate(DEVICE_ROUTE + '/' + device.id)}>
         <div style={{width: 150, cursor: 'pointer'}} border={'light'} className='mt-2'>
-            <img width={150} height={150} src={device.img} alt='Фото продукта'/>
+            <img width={150} height={150} src={process.env.REACT_APP_API_URL + device.img} alt='Фото продукта'/>
             <div>
                 <p>{device.name}</p>
                 <p>{device.price}</p>

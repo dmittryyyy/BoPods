@@ -4,7 +4,9 @@ import { ThemeContext } from '../..';
 import { DeviceItem } from '../deviceItem/DeviceItem';
 
 export const DevicesList = observer( () => {
+
     const { device } = useContext(ThemeContext);
+    
   return (
     <div className='products'>
         {device.devices.map(device =>

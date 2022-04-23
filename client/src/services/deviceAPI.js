@@ -1,0 +1,40 @@
+import { $authHost, $host } from "./services";
+
+export const createType = async (type) => {
+    const {data} = await $authHost.post('api/type', type);
+    return data;
+}
+
+export const getTypes = async () => {
+    const {data} = await $host.get('api/type');
+    return data;
+}
+
+// Brands
+
+export const createBrand = async (brand) => {
+    const {data} = await $authHost.post('api/brand', brand);
+    return data;
+}
+
+export const getBrands = async () => {
+    const {data} = await $host.get('api/brand');
+    return data;
+}
+
+// Device
+
+export const createDevice = async (device) => {
+    const {data} = await $authHost.post('api/device', device);
+    return data;
+}
+
+export const getDevices = async () => {
+    const {data} = await $host.get('api/device');
+    return data;
+}
+
+export const getDevice = async (id) => {
+    const {data} = await $host.get('api/device/' + id);
+    return data;
+}
