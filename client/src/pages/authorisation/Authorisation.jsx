@@ -2,7 +2,7 @@ import { React, useContext, useState } from 'react';
 import { Link, useLocation, useNavigate} from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from '../../utils/constants';
+import { ADMIN_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from '../../utils/constants';
 import { registration, login } from '../../services/userAPI';
 import { ThemeContext } from '../..';
 
@@ -19,15 +19,21 @@ export const Authorisation = observer(() => {
   const signIn = async () => {
     try {
       let data;
-    if (isLogin) {
-      data = await login(email, password);
-    } else {
-      data = await registration(email, password);
-    }
-    user.setUser(user);
-    user.setIsAuth(true);
-    history(SHOP_ROUTE)
-    } catch(e) {
+      if (isLogin) {
+        data = await login(email, password);
+        if (email === 'admin@mail.ru') {
+          user.setIsAdmin(true);
+          history(ADMIN_ROUTE);
+        } else {
+          user.setIsAuth(true);
+        }
+      } else {
+        data = await registration(email, password);
+        user.setUser(data);
+        user.setIsAuth(true);
+      }
+      history(SHOP_ROUTE);
+    } catch (e) {
       alert(e.response.data.message)
     }
   }

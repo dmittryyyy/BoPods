@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router';
 
 import './Header.scss';
-import { ADMIN_ROUTE, LOGIN_ROUTE } from '../../utils/constants';
+import { ADMIN_ROUTE, CART_ROUTE, LOGIN_ROUTE } from '../../utils/constants';
 
 export const Header = observer(() => {
   const { user } = useContext(ThemeContext);
@@ -15,6 +15,7 @@ export const Header = observer(() => {
   const logOut = () => {
     user.setUser({});
     user.setIsAuth(false);
+    user.setIsAdmin(false);
   }
 
   return (
@@ -28,16 +29,21 @@ export const Header = observer(() => {
           </div>
         </div>
         <div className="navi">
-          {user.isAuth ? (
+          {user.isAdmin ? (
             <nav>
               <button onClick={() => navigate(ADMIN_ROUTE)}>Администратор</button>
               <button onClick={() => logOut()}>Выйти</button>
             </nav>
-          ) : (
+          ): user.isAuth ? (
             <nav>
+            <button onClick={() => navigate(CART_ROUTE)}>Корзина</button>
+            <button onClick={() => logOut()}>Выйти</button>
+          </nav>
+          ):  
+           <nav>
               <button onClick={() => navigate(LOGIN_ROUTE)}>Авторизация</button>
             </nav>
-          )}
+          }
         </div>
       </div>
     </header>

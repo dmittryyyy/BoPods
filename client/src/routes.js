@@ -1,16 +1,19 @@
 import { AdminPanel } from './pages/adminPanel/AdminPanel';
-import { Cart } from './pages/Cart';
+import { Cart } from './pages/cart/Cart';
 import { Shop } from './pages/shop/Shop';
 import { Device } from './pages/device/Device';
 import { Authorisation } from './pages/authorisation/Authorisation';
 
 import { ADMIN_ROUTE, CART_ROUTE, DEVICE_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from './utils/constants';
 
-export const authRoutes = [
+export const adminRoutes = [
     {
         path: ADMIN_ROUTE,
         Component: <AdminPanel/>
-    },
+    }
+]
+
+export const authRoutes = [
     {
         path: CART_ROUTE,
         Component: <Cart/>
