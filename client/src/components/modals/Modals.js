@@ -58,8 +58,10 @@ export const Modals = observer(({ showProd, showType, showBrand, closeModal }) =
         formData.append('name', name);
         formData.append('price', `${price}`);
         formData.append('img', file);
-        formData.append("brandId", device.selectedBrand.id);
-        formData.append("typeId", device.selectedType.id);
+        let brandSelect = document.getElementById("select-super-1");
+        formData.append("brandId", brandSelect.options[brandSelect.selectedIndex].value);
+        let typeSelect = document.getElementById("select-super-1");
+        formData.append("typeId", typeSelect.options[typeSelect.selectedIndex].value);
         formData.append('info', JSON.stringify(isInfo))
         createDevice(formData).then(data => closeModal());
     }
@@ -74,20 +76,20 @@ export const Modals = observer(({ showProd, showType, showBrand, closeModal }) =
                     <div className='modalContentProd'>
                         <h3>Добавление товара</h3>
                         <div className="menuSelect">
-                            <select className='selectItem'>
+                            <select className='selectItem' id="select-super-1">
                                 <option>{device.selectedType.name || 'Выберете тип'}</option>
                                 {device.types.map(type =>
-                                    <option onClick={() => device.setSelectedType(type)}
+                                    <option value = {type.id}
                                         key={type.id}
                                         >
                                         {type.name}
                                     </option>
                                 )}
                             </select>
-                            <select className='selectItem'>
+                            <select className='selectItem' id="select-super-2">
                                 <option>{device.selectedBrand.name || 'Выберете брэнд'}</option>
                                 {device.brands.map(brand =>
-                                    <option onClick={() => device.setSelectedBrand(brand)}
+                                    <option value = {brand.id}
                                         key={brand.id}
                                         >
                                         {brand.name}
