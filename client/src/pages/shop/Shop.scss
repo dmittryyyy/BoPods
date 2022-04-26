@@ -18,7 +18,7 @@ main {
     
 
     .sidebarItem {
-        margin-top: 20px;
+        margin: 20px 0;
         color: rgb(193, 190, 190);
         transition: .2s ease-in;
         cursor: pointer;
@@ -37,6 +37,33 @@ main {
 .productMain {
     margin-top: 20px;
     grid-area: content;
+
+    .pagination {
+        display: flex;
+        justify-content: start;
+        margin: 20px 0;
+
+        .pageItem {
+            padding: 15px;
+            margin-left: 10px;
+            font-size: 18px;
+            font-weight: 500;
+            border: 1px solid #3e8fcf;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: .3s;
+        }
+        .pageItem:hover {
+            background-color: #336c98;
+            transition: .3s;
+        }
+        .pageItemActive {
+            background-color: #336c98;
+            color: #FFFFFF;
+            transition: .3s;
+            
+        }
+    }
 }
 
 .brands {

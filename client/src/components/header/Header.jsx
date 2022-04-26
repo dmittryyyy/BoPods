@@ -16,6 +16,7 @@ export const Header = observer(() => {
     user.setUser({});
     user.setIsAuth(false);
     user.setIsAdmin(false);
+    localStorage.clear();
   }
 
   return (
@@ -34,18 +35,17 @@ export const Header = observer(() => {
               <button onClick={() => navigate(ADMIN_ROUTE)}>Администратор</button>
               <button onClick={() => logOut()}>Выйти</button>
             </nav>
-          ): user.isAuth ? (
+          ): ( user.isAuth ? (
             <nav>
             <button onClick={() => navigate(CART_ROUTE)}>Корзина</button>
             <button onClick={() => logOut()}>Выйти</button>
           </nav>
-          ):  
+          ): ( 
            <nav>
               <button onClick={() => navigate(LOGIN_ROUTE)}>Авторизация</button>
             </nav>
-          }
+          ))}
         </div>
       </div>
     </header>
-  )
-});
+)});

@@ -1,7 +1,6 @@
 import { React, useContext, useState, useEffect } from 'react';
 import { ThemeContext } from '../..';
-import { createType, createBrand } from '../../services/deviceAPI';
-import { getTypes, getBrands, getDevices, createDevice } from '../../services/deviceAPI';
+import { createType, createBrand, createDevice, getTypes, getBrands } from '../../services/deviceAPI';
 
 import { observer } from 'mobx-react-lite';
 
@@ -10,20 +9,18 @@ import './Modals.scss';
 export const Modals = observer(({ showProd, showType, showBrand, closeModal }) => {
 
     const { device } = useContext(ThemeContext);
+
     const [isInfo, setIsInfo] = useState([]);
-
     const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
+    const [price, setPrice] = useState(0);
     const [file, setFile] = useState(null);
-
 
     const [valueType, setValueType] = useState('');
     const [valueBrand, setValueBrand] = useState('');
 
-    useEffect(() => {
+    useEffect( () => {
         getTypes().then(data => device.setTypes(data));
         getBrands().then(data => device.setBrands(data));
-        getDevices().then(data => device.setDevices(data.rows));
       }, []);
 
     const addType = () => {
@@ -61,10 +58,10 @@ export const Modals = observer(({ showProd, showType, showBrand, closeModal }) =
         formData.append('name', name);
         formData.append('price', `${price}`);
         formData.append('img', file);
-        formData.append('brandId', device.selectedBrand.id);
-        formData.append('typeId', device.selectedType.id);
+        formData.append("brandId", device.selectedBrand.id);
+        formData.append("typeId", device.selectedType.id);
         formData.append('info', JSON.stringify(isInfo))
-        createDevice(formData).then(data => onclose());
+        createDevice(formData).then(data => closeModal());
     }
 
     return (
@@ -77,20 +74,22 @@ export const Modals = observer(({ showProd, showType, showBrand, closeModal }) =
                     <div className='modalContentProd'>
                         <h3>Добавление товара</h3>
                         <div className="menuSelect">
-                            <select className='selectItem' name="" id="">
+                            <select className='selectItem'>
                                 <option>{device.selectedType.name || 'Выберете тип'}</option>
                                 {device.types.map(type =>
                                     <option onClick={() => device.setSelectedType(type)}
-                                        key={type.id}>
+                                        key={type.id}
+                                        >
                                         {type.name}
                                     </option>
                                 )}
                             </select>
-                            <select className='selectItem' name="" id="">
+                            <select className='selectItem'>
                                 <option>{device.selectedBrand.name || 'Выберете брэнд'}</option>
                                 {device.brands.map(brand =>
                                     <option onClick={() => device.setSelectedBrand(brand)}
-                                        key={brand.id}>
+                                        key={brand.id}
+                                        >
                                         {brand.name}
                                     </option>
                                 )}

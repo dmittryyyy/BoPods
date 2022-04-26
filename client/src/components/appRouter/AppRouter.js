@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 import { ThemeContext } from '../../index';
 import { authRoutes, publicRoutes, adminRoutes } from '../../routes';
 import { Shop } from '../../pages/shop/Shop';
 
-export const AppRouter = () => {
+export const AppRouter = observer ( () => {
     const { user } = useContext(ThemeContext);
+    
     return (
         <Routes>
             {user.isAdmin && adminRoutes.map(({ path, Component }) =>
@@ -24,4 +26,4 @@ export const AppRouter = () => {
             <Route path='*' element={<Shop />} />
         </Routes>
     )
-}
+});

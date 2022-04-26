@@ -13,11 +13,28 @@ import './Shop.scss';
 export const Shop = observer ( () => {
   const { device } = useContext(ThemeContext);
 
-  useEffect(() => {
+  const pageCount = Math.ceil(device.totalCount / device.limit);
+  const pages = []
+
+  for (let i = 0; i < pageCount; i++) {
+    pages.push(i + 1)
+  };
+
+  useEffect( () => {
     getTypes().then(data => device.setTypes(data));
     getBrands().then(data => device.setBrands(data));
-    getDevices().then(data => device.setDevices(data.rows));
+    getDevices(null, null, 1, 2).then(data => {
+      device.setDevices(data.rows)
+      device.setTotalCount(data.count)
+    })
   }, []);
+
+  useEffect( () => {
+    getDevices(device.selectedType.id, device.selectedBrand.id, device.page, 2).then(data => {
+      device.setDevices(data.rows)
+      device.setTotalCount(data.count)
+    })
+  }, [device.selectedType, device.selectedBrand, device.page, 2]);
 
   return (
     <div className="wrapperShop">
@@ -28,6 +45,16 @@ export const Shop = observer ( () => {
         <div className='productMain container'>
           <BrandBar />
           <DevicesList />
+          <div className="pagination">
+          {pages.map(page => 
+            <div
+            key={page}
+            onClick={() => device.setPage(page)} 
+            className={`pageItem ${device.page === page ? 'pageItemActive' : ''}`}>
+              {page}
+              </div>
+            )}
+        </div>
         </div>
       </main>
     </div>

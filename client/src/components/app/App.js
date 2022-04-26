@@ -16,15 +16,19 @@ export const App = observer( () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect( () => {
-    setTimeout( () => {
+    setIsLoading(true);
       check().then(data =>{
-        user.setUser(true);
-        user.setIsAuth(false);
+        if (data.role === 'ADMIN') {
+          user.setIsAdmin(true);
+          user.setIsAuth(true);
+          user.setUser(data);
+        } else {
+          user.setIsAuth(true);
+          user.setUser(data);
+        }
       })
       setIsLoading(false);
-    }, 1000)
-    
-  }, [])
+  }, []);
 
   if (isLoading) {
     return <div className='gifLoading'><img src="/images/loading.gif" alt="Загрузка"/></div>

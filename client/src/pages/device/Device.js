@@ -22,10 +22,10 @@ export const Device = () => {
         <div className="featureItems">
           <h3>{isDevice.name}</h3>
           <h3>Характеристики</h3>
-          {isDevice.info.map(descr =>
+          {isDevice.info.map((info) =>
             <div className='feutersItem'
-            key={descr.id}>
-              {descr.title} : {descr.description}
+            key={info.id}>
+              {info.title} : {info.description}
             </div>
             )}
         </div>

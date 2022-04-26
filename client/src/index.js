@@ -8,7 +8,7 @@ import DeviceStore from './store/DeviceStore';
 import './index.scss';
 
 export const ThemeContext = createContext(null);
-console.log(process.env.REACT_APP_API_URL)
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

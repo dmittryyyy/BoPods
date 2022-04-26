@@ -8,11 +8,13 @@ import { ThemeContext } from '../..';
 
 import './Authorisation.scss';
 
-export const Authorisation = observer(() => {
+export const Authorisation = observer( () => {
   const { user } = useContext(ThemeContext);
   const location = useLocation();
-  const history = useNavigate();
+  const navigate = useNavigate();
+
   const isLogin = location.pathname === LOGIN_ROUTE;
+
   const [email, setEmail] = useState('')
   const [password, setsetPassword] = useState('')
 
@@ -23,7 +25,8 @@ export const Authorisation = observer(() => {
         data = await login(email, password);
         if (email === 'admin@mail.ru') {
           user.setIsAdmin(true);
-          history(ADMIN_ROUTE);
+          console.log(user.isAdmin);
+          navigate(ADMIN_ROUTE);
         } else {
           user.setIsAuth(true);
         }
@@ -32,7 +35,7 @@ export const Authorisation = observer(() => {
         user.setUser(data);
         user.setIsAuth(true);
       }
-      history(SHOP_ROUTE);
+      navigate(SHOP_ROUTE);
     } catch (e) {
       alert(e.response.data.message)
     }
