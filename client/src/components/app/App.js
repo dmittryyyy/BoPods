@@ -11,35 +11,35 @@ import './App.scss';
 import { check } from '../../services/userAPI';
 
 
-export const App = observer( () => {
+export const App = observer(() => {
   const { user } = useContext(ThemeContext)
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect( () => {
+  useEffect(() => {
     setIsLoading(true);
-      check().then(data =>{
-        if (data.role === 'ADMIN') {
-          user.setIsAdmin(true);
-          user.setIsAuth(true);
-          user.setUser(data);
-        } else {
-          user.setIsAuth(true);
-          user.setUser(data);
-        }
-      })
-      setIsLoading(false);
+    check().then(data => {
+      if (data.role === 'ADMIN') {
+        user.setIsAdmin(true);
+        user.setIsAuth(true);
+        user.setUser(data);
+      } else {
+        user.setIsAuth(true);
+        user.setUser(data);
+      }
+    })
+    setIsLoading(false);
   }, []);
 
   if (isLoading) {
-    return <div className='gifLoading'><img src="/images/loading.gif" alt="Загрузка"/></div>
+    return <div className='gifLoading'><img src="/images/loading.gif" alt="Загрузка" /></div>
   }
 
   return (
     <BrowserRouter>
       <div className="App App-init">
-        <Header/>
+        <Header />
         <AppRouter />
-        <Footer/>
+        <Footer />
       </div>
     </BrowserRouter>
   );

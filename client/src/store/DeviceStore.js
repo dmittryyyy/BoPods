@@ -41,27 +41,34 @@ export default class DeviceStore {
     }
 
     get types() {
-        return this._types
+        return this._types;
     }
+
     get brands() {
-        return this._brands
+        return this._brands;
     }
+
     get devices() {
-        return this._devices
+        return this._devices;
     }
+
     get selectedType() {
-        return this._selectedType
+        return this._selectedType;
     }
+
     get selectedBrand() {
-        return this._selectedBrand
-    }   
+        return this._selectedBrand;
+    }  
+
     get page() {
-        return this._page
+        return this._page;
     }
+
     get totalCount() {
-        return this._totalCount
+        return this._totalCount;
     }
+
     get limit() {
-        return this._limit
+        return this._limit;
     }   
 }

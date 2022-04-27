@@ -1,5 +1,4 @@
 .App {
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.04);
   margin: 20px auto;
   max-width: 1480px;
 }
@@ -18,38 +17,38 @@
   }
 }
 
-// @media (max-width: 1329px) {
-//   .App {
-//       max-width: 1080px;
-//   }
-// }
+@media (max-width: 1329px) {
+  .App {
+      max-width: 1080px;
+  }
+}
 
-// @media (max-width: 1080px) {
-//   .App {
-//       max-width: 930px;
-//   }
-// }
+@media (max-width: 1080px) {
+  .App {
+      max-width: 930px;
+  }
+}
 
-// @media (max-width: 830px) {
-//   .App {
-//       max-width: 710px;
-//   }
-// }
+@media (max-width: 830px) {
+  .App {
+      max-width: 710px;
+  }
+}
 
-// @media (max-width: 630px) {
-//   .App {
-//       max-width: 510px;
-//   }
-// }
+@media (max-width: 630px) {
+  .App {
+      max-width: 510px;
+  }
+}
 
-// @media (max-width: 425px) {
-//   .App {
-//       max-width: 380px;
-//   }
-// }
+@media (max-width: 425px) {
+  .App {
+      max-width: 380px;
+  }
+}
 
-// @media (max-width: 375px) {
-//   .App {
-//       max-width: 350px;
-//   }
-// }
+@media (max-width: 375px) {
+  .App {
+      max-width: 350px;
+  }
+}

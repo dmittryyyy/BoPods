@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import { DevicesList } from '../../components/devicesList/DevicesList';
@@ -12,6 +12,8 @@ import './Shop.scss';
 
 export const Shop = observer ( () => {
   const { device } = useContext(ThemeContext);
+
+  const [searchValue, setSearchValue] = useState('');
 
   const pageCount = Math.ceil(device.totalCount / device.limit);
   const pages = []
@@ -43,7 +45,17 @@ export const Shop = observer ( () => {
       </div>
       <main>
         <div className='productMain container'>
-          <BrandBar />
+         <div className="mainTop">
+         <BrandBar />
+          <div className="search">
+            <img src="/images/search.svg" alt="Поиск" />
+          {searchValue && <span className='clearInput' onClick={() => setSearchValue('')}>X</span>}
+            <input type="text" 
+            placeholder='Поиск...'
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}/>
+          </div>
+         </div>
           <DevicesList />
           <div className="pagination">
           {pages.map(page => 

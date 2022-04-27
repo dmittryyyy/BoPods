@@ -1,0 +1,25 @@
+.wrapperCart {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+
+    .btnBack {
+        margin-left: 20px;
+        transition: .3s;
+    }
+
+    .btnBack:hover {
+        margin-left: 10px;
+        transition: .3s;
+    }
+
+    .cartBlock {
+        text-align: center;
+
+        h2 {
+            margin: 10px 0;
+            font-size: 30px;
+            font-weight: 700;
+            color: #254c55;
+        }
+    }
+}

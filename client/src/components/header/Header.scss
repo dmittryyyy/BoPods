@@ -1,47 +1,59 @@
 header {
-    background-color: #000;
     grid-area: header;
     margin-bottom: 30px;
 
     .headerWrapper {
         display: flex;
         justify-content: space-between;
-    }
-    .logo {
-        display: flex;
-        align-items: center;
-        
+        padding: 20px;
 
-        img {
-            width: 150px;
-            border-radius: 80px;
-        }
-        
-        .logoTitle {
-            padding-left: 5px;
-            border-left: 1px solid #888686;
+        .headerLeft {
+            display: flex;
+            align-items: center;
 
-            h1 {
-                color: aliceblue;
-                font-size: 30px;
+            img {
+                width: 180px;
             }
 
-            p {
-                color: aliceblue;
+
+            .headerTitle {
+                margin-left: 10px;
+                border-left: 2px solid #FFFFFF;
+                padding-left: 10px;
+
+                h1 {
+                    color: #FFFFFF;
+                    font-size: 30px;
+                    font-weight: 700;
+                }
+
+                h3 {
+                    color: #FFFFFF;
+                    font-size: 20px;
+                    font-weight: 500;
+                }
             }
         }
-    }
-    button {
-        border: 2px solid rgb(134 100 60 / 80%);
-        background-color: #FFFFFF;
-        font-size: 16px;
-        font-weight: 700;
-        padding: 5px;
-        cursor: pointer;
-        margin-right: 10px;
-        border-radius: 10px;
-    }
-    button:hover {
-        background-color: #bcb9b9;
+
+        .headerRight {
+            button {
+                background: #FFFFFF;
+                margin-right: 20px;
+                color: #254c55;
+                padding: 5px;
+                border-radius: 10px;
+                font-weight: 700;
+                font-size: 20px;
+                box-shadow: 0px 10px 15px rgb(73 155 165);
+                cursor: pointer;
+                transition: .3s;
+            }
+            button:hover {
+                color: #FFFFFF;
+                background: none;
+                border: 1px solid #FFFFFF;
+                transition: .3s;
+            }
+        }
     }
 }
