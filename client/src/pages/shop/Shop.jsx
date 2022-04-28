@@ -14,6 +14,7 @@ export const Shop = observer ( () => {
   const { device } = useContext(ThemeContext);
 
   const [searchValue, setSearchValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const pageCount = Math.ceil(device.totalCount / device.limit);
   const pages = []
@@ -32,11 +33,15 @@ export const Shop = observer ( () => {
   }, []);
 
   useEffect( () => {
-    getDevices(device.selectedType.id, device.selectedBrand.id, device.page, 2).then(data => {
+    getDevices(device.selectedType.id, device.selectedBrand.id, device.page, 4).then(data => {
       device.setDevices(data.rows)
       device.setTotalCount(data.count)
     })
-  }, [device.selectedType, device.selectedBrand, device.page, 2]);
+  }, [device.selectedType, device.selectedBrand, device.page, 4]);
+
+  const onChangeSearchValue = (e) => {
+    setSearchValue(e.target.value);
+  }
 
   return (
     <div className="wrapperShop">
@@ -53,10 +58,13 @@ export const Shop = observer ( () => {
             <input type="text" 
             placeholder='Поиск...'
             value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}/>
+            onChange={onChangeSearchValue}/>
           </div>
          </div>
-          <DevicesList />
+          <DevicesList 
+          searchValue={searchValue}
+          isLoading={isLoading}
+          />
           <div className="pagination">
           {pages.map(page => 
             <div

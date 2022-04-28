@@ -1,17 +1,28 @@
-import React, { useContext } from 'react';
-import { observer } from 'mobx-react-lite';
+import { React, useContext } from 'react';
 import { ThemeContext } from '../..';
 import { DeviceItem } from '../deviceItem/DeviceItem';
 
-export const DevicesList = observer( () => {
+import { observer } from 'mobx-react-lite';
 
-    const { device } = useContext(ThemeContext);
-    
+
+export const DevicesList = observer(({ searchValue, isLoading }) => {
+
+  const { device } = useContext(ThemeContext);
+
+  const renderProducts = () => {
+    const filterDevices = device.devices.filter(device =>
+      device.name.toLowerCase().includes(searchValue));
+
+    return (isLoading ? [...Array(8)] : filterDevices).map((device, index) =>
+      <DeviceItem
+        isLoading={isLoading}
+        key={index}
+        device={device} />
+    )};
+
   return (
     <div className='products'>
-        {device.devices.map(device =>
-            <DeviceItem key={device.id} device={device}/>
-            )}
+      {renderProducts()}
     </div>
   )
 });
