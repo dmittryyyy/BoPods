@@ -11,9 +11,9 @@ export const Footer = () => {
           </div>
         <div className="social">
             <ul>
-                <a href="https://www.instagram.com/bo_pods/"><img src="/images/footer/whatsIcon.svg" alt="WhatsApp" /></a>
-                <a href=""><img src="/images/footer/telegIcon.svg" alt="Telegram" /></a>
-                <a href=""><img src="/images/footer/instIcon.svg" alt="Instagram" /></a>
+                <a href="https://www.instagram.com/bo_pods/"><img src="/images/footer/whatsIcon.png" alt="WhatsApp" /></a>
+                <a href=""><img src="/images/footer/telegIcon.png" alt="Telegram" /></a>
+                <a href=""><img src="/images/footer/instIcon.png" alt="Instagram" /></a>
             </ul>
         </div>
     </footer>

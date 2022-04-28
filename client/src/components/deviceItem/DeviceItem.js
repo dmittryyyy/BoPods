@@ -1,13 +1,20 @@
-import React from 'react';
+import { React, useContext, useState } from 'react';
 import { DEVICE_ROUTE } from '../../utils/constants';
-import ContentLoader from 'react-content-loader';
+import { ThemeContext } from '../..';
 
+import ContentLoader from 'react-content-loader';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 
-export const DeviceItem = observer(({ device, isLoading }) => {
+export const DeviceItem = observer(({ device, isLoading, onAddToCart }) => {
+
+  const { user } = useContext(ThemeContext);
+
+  const [cartItems, setCartItems] = useState([]);
+
   const navigate = useNavigate();
+
   return (
     <div className='device'>
       {isLoading ? (
@@ -26,6 +33,8 @@ export const DeviceItem = observer(({ device, isLoading }) => {
       ) : (
         <div>
           <img width={150} height={150} src={process.env.REACT_APP_API_URL + device.img} onClick={() => navigate(DEVICE_ROUTE + '/' + device.id)} alt='Фото продукта' />
+          <span className={user.isAdmin ? 'btnDelete' : 'btnDeleteHidden'} 
+          title='Удалить товар'>x</span>
           <div className='deviceItemBottom'>
             <div className="deviceContent">
               <h3>{device.name}</h3>

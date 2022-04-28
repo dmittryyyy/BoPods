@@ -16,10 +16,21 @@
         text-align: center;
 
         h2 {
-            margin: 10px 0;
             font-size: 30px;
             font-weight: 700;
             color: #254c55;
+            margin-bottom: 20px;
+        }
+
+        .cartNull {
+            width: 300px;
+        }
+
+        p {
+            font-size: 20px;
+            font-weight: 500;
+            color: #254c55;
+            padding: 20px 0;
         }
     }
 }

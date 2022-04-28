@@ -8,11 +8,9 @@ import { Link } from 'react-router-dom';
 import './Cart.scss';
 
 
-export const Cart = () => {
+export const Cart = ({ cartItems }) => {
 
   const { device } = useContext(ThemeContext);
-
-  const [cartItems, setCartItems] = useState([]);
 
   return (
     <div className="wrapperCart">
@@ -30,7 +28,8 @@ export const Cart = () => {
       
       : <СartInfo
             title={'Корзина пока пуста...'}
-            descr={'Добавьте хоть что-нибудь'}
+            img={'/images/cartNull.jpg'}
+            descr={'Добавьте хотя-бы один товар!'}
       />
         }
       </div>

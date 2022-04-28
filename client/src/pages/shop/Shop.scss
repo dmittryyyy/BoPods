@@ -36,6 +36,30 @@ main {
         padding-bottom: 5px;
         border-bottom: 2px solid #FFFFFF;
     }
+
+    .allProducts {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        background-color: #FFFFFF;
+        color: #254c55;
+        border: 2px solid #FFFFFF;
+        border-radius: 10px;
+        padding: 5px;
+        margin: 20px 0 40px 0;
+        transition: .2s ease-in;
+        cursor: pointer;  
+    }
+    .allProducts:hover {
+        border: 2px solid #FFFFFF;
+        background: none;
+        color: #FFFFFF;
+        transition: .2s;
+    }
+    .allProducts:active {
+        color: #0d0d0d;
+        transition: .2s;
+    }
 }
 
 .productMain {
@@ -124,8 +148,7 @@ main {
 }
 
 .device {
-    max-width: 300px;
-    max-height: 300px;
+    min-width: 150px;
     border: 1px solid #FFF;
     cursor: pointer;
     text-align: center;
@@ -133,6 +156,18 @@ main {
     color: #254c55;
     transition: .3s;
 
+    .btnDelete {
+        padding: 5px;
+        font-weight: 700;
+        font-size: 20px;
+    }
+    .btnDelete:hover {
+        color: red;
+    }
+    .btnDeleteHidden {
+        display: none;
+    }
+    
     .deviceItemBottom {
         display: flex;
         justify-content: space-between;
@@ -189,6 +224,7 @@ main {
     border: 1px solid silver;
     transform: translateY(-5px);
     transition: .3s;
+    border-radius: 10px;
 }
 
 .products {

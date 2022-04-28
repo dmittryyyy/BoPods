@@ -15,6 +15,7 @@ export const Shop = observer ( () => {
 
   const [searchValue, setSearchValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [allProducts, setAllProducts] = useState(false);
 
   const pageCount = Math.ceil(device.totalCount / device.limit);
   const pages = []
@@ -23,19 +24,31 @@ export const Shop = observer ( () => {
     pages.push(i + 1)
   };
 
+  const getAllProducts = () => {
+    getDevices(null, null, 1, 8).then(data => {
+      device.setDevices(data.rows);
+      device.setTotalCount(data.count);
+    })
+    device.setSelectedType('');
+    device.setSelectedBrand('');
+    setAllProducts(true);
+  }
+
   useEffect( () => {
+    setIsLoading(true);
     getTypes().then(data => device.setTypes(data));
     getBrands().then(data => device.setBrands(data));
     getDevices(null, null, 1, 2).then(data => {
-      device.setDevices(data.rows)
-      device.setTotalCount(data.count)
+      device.setDevices(data.rows);
+      device.setTotalCount(data.count);
     })
+    setIsLoading(false);
   }, []);
 
   useEffect( () => {
     getDevices(device.selectedType.id, device.selectedBrand.id, device.page, 4).then(data => {
-      device.setDevices(data.rows)
-      device.setTotalCount(data.count)
+      device.setDevices(data.rows);
+      device.setTotalCount(data.count);
     })
   }, [device.selectedType, device.selectedBrand, device.page, 4]);
 
@@ -46,7 +59,10 @@ export const Shop = observer ( () => {
   return (
     <div className="wrapperShop">
       <div className='sidebar container'>
-        <TypeBar />
+        <TypeBar 
+        getAllProducts={getAllProducts}
+        allProducts={allProducts}
+        />
       </div>
       <main>
         <div className='productMain container'>

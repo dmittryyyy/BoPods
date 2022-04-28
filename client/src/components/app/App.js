@@ -13,7 +13,7 @@ import { check } from '../../services/userAPI';
 
 export const App = observer(() => {
   const { user } = useContext(ThemeContext)
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState();
 
   useEffect(() => {
     setIsLoading(true);

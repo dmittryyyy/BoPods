@@ -29,6 +29,13 @@ footer {
         a {
             color: #FFFFFF;
             margin-right: 10px;
+
+            img {
+                width: 80px;
+            }
+        }
+        a:hover {
+            transform: scale(1.1, 1.1);
         }
     }
 }
