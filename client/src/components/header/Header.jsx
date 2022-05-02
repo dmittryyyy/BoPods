@@ -37,6 +37,7 @@ export const Header = observer(() => {
             </nav>
           ) : (user.isAuth ? (
             <nav>
+               <button onClick={() => navigate('/')}>Профиль</button>
               <button onClick={() => navigate(CART_ROUTE)}>Корзина</button>
               <button onClick={() => logOut()}>Выйти</button>
             </nav>

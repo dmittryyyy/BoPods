@@ -23,7 +23,7 @@ export const AdminPanel = () => {
   return (
     <>
       <div className="adminContainer">
-      <Link to='/'><img src="/images/arrowLeft.svg" alt="Компьютер" /></Link>
+      <Link to='/'><img src="/images/arrowLeft.svg" alt="Кнопка назад" /></Link>
         <div className="AdminWrapper">
         <div className="statisticBlock">
             <ul>

@@ -29,6 +29,7 @@ export const App = observer(() => {
     })
     setIsLoading(false);
   }, []);
+  
 
   if (isLoading) {
     return <div className='gifLoading'><img src="/images/loading.gif" alt="Загрузка" /></div>

@@ -8,14 +8,16 @@ import { Link } from 'react-router-dom';
 import './Cart.scss';
 
 
-export const Cart = ({ cartItems }) => {
+export const Cart = () => {
 
   const { device } = useContext(ThemeContext);
+
+  const [cartItems, setCartItems] = useState([]);
 
   return (
     <div className="wrapperCart">
       <Link to='/'><img src="/images/arrowLeft.svg" 
-      alt="Компьютер" 
+      alt="Кнопка назад" 
       className='btnBack'
       /></Link>
       <div className='cartBlock container'>
