@@ -4,7 +4,7 @@ export const СartInfo = ({ title, img, descr }) => {
   return (
     <div>
       <h2>{title}</h2>
-      <img className='cartNull' src={img} alt="Кот с пустой миской" />
+      <img className='cartNull' src={img} alt=''/>
       <p>{descr}</p>
     </div>
   )

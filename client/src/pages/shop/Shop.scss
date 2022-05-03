@@ -9,228 +9,233 @@ main {
         'menu content'
         'footer footer';
     grid-template-columns: 300px 1fr;
-}
 
 
-.sidebar {
-    grid-area: menu;
-    background-image: url('../../../public/images/sidebarBg.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 20px 0 0 20px;
+    .sidebar {
+        grid-area: menu;
+        background-image: url('../../../public/images/sidebarBg.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 20px 0 0 20px;
 
 
-    .sidebarItem {
-        margin: 20px 0;
-        color: #FFFFFF;
-        transition: .2s ease-in;
-        cursor: pointer;
-    }
-
-    .sidebarItemActive {
-        margin-top: 20px;
-        color: #FFFFFF;
-        transform: scale(1.1, 1.2);
-        transition: .2s;
-        cursor: default;
-        padding-bottom: 5px;
-        border-bottom: 2px solid #FFFFFF;
-    }
-
-    .allProducts {
-        text-align: center;
-        font-size: 18px;
-        font-weight: 600;
-        background-color: #FFFFFF;
-        color: #254c55;
-        border: 2px solid #FFFFFF;
-        border-radius: 10px;
-        padding: 5px;
-        margin: 20px 0 40px 0;
-        transition: .2s ease-in;
-        cursor: pointer;  
-    }
-    .allProducts:hover {
-        border: 2px solid #FFFFFF;
-        background: none;
-        color: #FFFFFF;
-        transition: .2s;
-    }
-    .allProducts:active {
-        color: #0d0d0d;
-        transition: .2s;
-    }
-}
-
-.productMain {
-    margin-top: 20px;
-    grid-area: content;
-
-    .pagination {
-        display: flex;
-        justify-content: start;
-        margin: 40px 0 20px 0;
-
-        .pageItem {
-            padding: 15px;
-            margin-left: 10px;
-            font-size: 18px;
-            font-weight: 500;
-            border: 1px solid #0db3df;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: .3s;
-        }
-
-        .pageItem:hover {
-            background-color: #0db3df;
-            transition: .3s;
-        }
-
-        .pageItemActive {
-            background-color: #0db3df;
+        .sidebarItem {
+            margin: 20px 0;
             color: #FFFFFF;
-            transition: .3s;
+            transition: .2s ease-in;
+            cursor: pointer;
+        }
+
+        .sidebarItemActive {
+            margin-top: 20px;
+            color: #FFFFFF;
+            transform: scale(1.1, 1.2);
+            transition: .2s;
+            cursor: default;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #FFFFFF;
+        }
+
+        .allProducts {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            background-color: #FFFFFF;
+            color: #254c55;
+            border: 2px solid #FFFFFF;
+            border-radius: 10px;
+            padding: 5px;
+            margin: 20px 0 40px 0;
+            transition: .2s ease-in;
+            cursor: pointer;
+        }
+
+        .allProducts:hover {
+            border: 2px solid #FFFFFF;
+            background: none;
+            color: #FFFFFF;
+            transition: .2s;
+        }
+
+        .allProducts:active {
+            color: #0d0d0d;
+            transition: .2s;
         }
     }
-}
 
-.brands {
-    display: flex;
-
-    .brandsItem {
-        margin-right: 10px;
-        padding: 12px;
-        font-weight: 600;
-        color: #254c55;
-    }
-
-    .brandsItemActive {
-        margin-right: 10px;
-        padding: 10px;
-        border: 2px solid #0db3df;
-        border-radius: 10px;
-    }
-}
-
-.mainTop {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .search {
-        align-items: center;
-        border: 1px solid #254c55;
-        border-radius: 10px;
+    .brands {
         display: flex;
-        padding: 0 15px;
-        position: relative;
+
+        .brandsItem {
+            margin-right: 10px;
+            padding: 12px;
+            font-weight: 600;
+            color: #254c55;
+        }
+
+        .brandsItemActive {
+            margin-right: 10px;
+            padding: 10px;
+            border: 2px solid #0db3df;
+            border-radius: 10px;
+        }
     }
 
-    input {
-        border-color: #254c55;
-        font-size: 16px;
-        outline: none;
-        padding: 10px;
-        width: 200px;
-        color: #254c55;
+    .productMain {
+        margin-top: 20px;
+        grid-area: content;
+
+        .pagination {
+            display: flex;
+            justify-content: start;
+            margin: 40px 0 20px 0;
+
+            .pageItem {
+                padding: 15px;
+                margin-left: 10px;
+                font-size: 18px;
+                font-weight: 500;
+                border: 1px solid #0db3df;
+                border-radius: 10px;
+                cursor: pointer;
+                transition: .3s;
+            }
+
+            .pageItem:hover {
+                background-color: #0db3df;
+                transition: .3s;
+            }
+
+            .pageItemActive {
+                background-color: #0db3df;
+                color: #FFFFFF;
+                transition: .3s;
+            }
+        }
     }
 
-    .clearInput {
-        cursor: pointer;
-        font-size: 15px;
-        font-weight: 700;
-        padding-right: 15px;
-        position: absolute;
-        color: #254c55;
-        right: 0;
-    }
-}
-
-.device {
-    min-width: 150px;
-    border: 1px solid #FFF;
-    cursor: pointer;
-    text-align: center;
-    margin: 0 15px 0 10px;
-    color: #254c55;
-    transition: .3s;
-
-    .btnDelete {
-        padding: 5px;
-        font-weight: 700;
-        font-size: 20px;
-    }
-    .btnDelete:hover {
-        color: red;
-    }
-    .btnDeleteHidden {
-        display: none;
-    }
-    
-    .deviceItemBottom {
+    .mainTop {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 5px;
 
-        .deviceContent {
-            display: flex;
-            flex-direction: column;
-        }
-
-        button {
-            background-color: none;
-            color: #9b9797;
-            padding: 10px;
+        .search {
+            align-items: center;
+            border: 1px solid #254c55;
             border-radius: 10px;
-            font-size: 20px;
-            font-weight: 600;
+            display: flex;
+            padding: 0 15px;
+            position: relative;
+        }
+
+        input {
+            border-color: #254c55;
+            font-size: 16px;
+            outline: none;
+            padding: 10px;
+            width: 200px;
+            color: #254c55;
+        }
+
+        .clearInput {
             cursor: pointer;
-            border: 2px solid #FFF;
-            transition: .3s;
-        }
-
-        button:hover {
-            background-color: #FFFFFF;
-            border: 2px solid #0db3df;
-            color: #0db3df;
-            transition: .3s;
-        }
-
-        button:active {
-            background-color: #0db3df;
-            color: #FFFFFF;
-            transition: .3s;
+            font-size: 15px;
+            font-weight: 700;
+            padding-right: 15px;
+            position: absolute;
+            color: #254c55;
+            right: 0;
         }
     }
 
-    img {
-        margin-bottom: 10px;
-    }
+    .products {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        align-items: center;
 
-    h3 {
-        margin-bottom: 10px;
-        font-weight: 600;
-        font-size: 18px;
-    }
+        .device {
+            min-width: 150px;
+            border: 1px solid #FFF;
+            cursor: pointer;
+            text-align: center;
+            margin: 0 15px 0 10px;
+            color: #254c55;
+            transition: .3s;
 
-    p {
-        font-weight: 500;
-    }
-}
-.device:hover {
-    box-shadow: 0px 20px 35px rgba(0, 0, 0, 0.08);
-    border: 1px solid silver;
-    transform: translateY(-5px);
-    transition: .3s;
-    border-radius: 10px;
-}
+            .btnDeleteAdmin {
+                padding: 5px;
+                font-weight: 700;
+                font-size: 20px;
+            }
 
-.products {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
-    align-items: center;
+            .btnDeleteAdmin:hover {
+                color: red;
+            }
+
+            .btnDeleteUser {
+                display: none;
+            }
+
+            .deviceItemBottom {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 5px;
+
+                .deviceContent {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                img {
+                    margin-bottom: 10px;
+                }
+
+                h3 {
+                    margin-bottom: 10px;
+                    font-weight: 600;
+                    font-size: 18px;
+                }
+
+                p {
+                    font-weight: 500;
+                }
+
+                button {
+                    background-color: none;
+                    color: #9b9797;
+                    padding: 10px;
+                    border-radius: 10px;
+                    font-size: 20px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    border: 2px solid #FFF;
+                    transition: .3s;
+                }
+
+                button:hover {
+                    background-color: #FFFFFF;
+                    border: 2px solid #0db3df;
+                    color: #0db3df;
+                    transition: .3s;
+                }
+
+                .buttonActive {
+                    background-color: #0db3df;
+                    color: #FFFFFF;
+                    transition: .3s;
+                }
+            }
+        }
+
+        .device:hover {
+            box-shadow: 0px 20px 35px rgba(0, 0, 0, 0.08);
+            border: 1px solid silver;
+            transform: translateY(-5px);
+            transition: .3s;
+            border-radius: 10px;
+        }
+    }
 }

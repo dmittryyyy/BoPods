@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { DeviceItem } from '../../components/deviceItem/DeviceItem';
 import { ThemeContext } from '../..';
 
+import './Profile.scss';
+
 export const Profile = () => {
     const [orderItems, setOrderItems] = useState([]);
 
@@ -25,7 +27,7 @@ export const Profile = () => {
     
     : <div>
         <h3>Пока здесь нет заказов!</h3>
-        <img src="/images/cart.jpg" alt="Коризна" />
+        <img className='orderNull' src="/images/cart.jpg" alt="Коризна" />
     </div>
       }
     </div>

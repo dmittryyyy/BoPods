@@ -66,17 +66,20 @@ export const getAllDevicesInAdminPage = async (name, page = 1, filter = "All") =
     return data;
 }
 
-export const addDeviceToBasket = async (device) => {
-    const {data} = await $authHost.post('api/basket', device);
+
+//Cart
+
+export const addDeviceToCart = async (device) => {
+    const {data} = await $authHost.post('api/cart', device);
     return data;
 }
 
-export const getDeviceFromBasket = async () => {
-    const {data} = await $authHost.get('api/basket');
+export const getDeviceFromCart = async () => {
+    const {data} = await $authHost.get('api/cart');
     return data;
 }
 
-export const deleteDeviceFromBasket = async (id) => {
-    const {data} = await $authHost.delete(`api/basket/${id}`);
+export const deleteDeviceFromCart = async (id) => {
+    const {data} = await $authHost.delete(`api/cart/${id}`);
     return data;
 }

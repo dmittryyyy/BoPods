@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import { App } from './components/app/App';
 import UserStore from './store/UserStore';
 import DeviceStore from './store/DeviceStore';
+import CartStore from './store/CartStore';
 
 import './index.scss';
 
@@ -17,6 +18,7 @@ root.render(
     value={{
       user: new UserStore(),
       device: new DeviceStore(),
+      cart: new CartStore(),
     }}>
       <App />
     </ThemeContext.Provider>
