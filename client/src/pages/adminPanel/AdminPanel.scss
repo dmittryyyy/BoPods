@@ -1,11 +1,13 @@
 .adminContainer {
     border-radius: 10px;
     background-color: #FFFFFF;
+    position: relative;
 
     img {
         margin-left: 20px;
         transition: .3s;
     }
+
     img:hover {
         margin-left: 10px;
         transition: .3s;
@@ -14,7 +16,6 @@
     .AdminWrapper {
         text-align: center;
         border-radius: 10px;
-        position: relative;
 
         img {
             margin: 40px 0;
@@ -24,26 +25,30 @@
             display: flex;
             justify-content: center;
             padding-bottom: 40px;
+        }
 
-            button {
-                background-color: #0db3df;
-                color: #FFFFFF;
-                padding: 10px;
-                border-radius: 10px;
-                font-size: 20px;
-                font-weight: 600;
-                cursor: pointer;
-                border: 2px solid #FFF;
-                margin-left: 50px;
-                transition: 0.3s;
-            }
+        button {
+            background-color: #0db3df;
+            color: #FFFFFF;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 2px solid #FFF;
+            margin-left: 50px;
+            transition: 0.3s;
+        }
 
-            button:hover {
-                background-color: #FFFFFF;
-                border: 2px solid #0db3df;
-                color: #0db3df;
-                transition: 0.3s;
-            }
+        button:hover {
+            background-color: #FFFFFF;
+            border: 2px solid #0db3df;
+            color: #0db3df;
+            transition: 0.3s;
+        }
+
+        .deleteTypeBrand {
+            margin-bottom: 20px;
         }
 
         .statisticBlock {

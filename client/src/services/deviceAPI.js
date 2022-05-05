@@ -11,7 +11,7 @@ export const getTypes = async () => {
 }
 
 export const deleteType = async (id) => {
-    const {data} = await $authHost({method:'DELETE', url: 'api/type/+id'});
+    const {data} = await $authHost.delete(`api/type/${id}`);
     return data;
 }
 
@@ -28,7 +28,7 @@ export const getBrands = async () => {
 }
 
 export const deleteBrand = async (id) => {
-    const {data} = await $authHost({method:'DELETE', url: 'api/brand/+id'});
+    const {data} = await $authHost.delete(`api/brand/${id}`);
     return data;
 }
 
@@ -52,7 +52,7 @@ export const getDevice = async (id) => {
 }
 
 export const deleteDevice = async (id) => {
-    const {data} = await $authHost({method: 'DELETE', url:`api/device/${id}`});
+    const {data} = await $authHost.delete(`api/device/${id}`);
     return data;
 }
 

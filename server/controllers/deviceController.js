@@ -4,6 +4,7 @@ const { Device, DeviceInfo, DeviceDescripton, OrderDevice, CartDevice } = requir
 const ApiError = require('../error/ApiError');
 
 class DeviceController {
+
     async create(req, res, next) {
         try {
             let { name, price, brandId, typeId, info, descr } = req.body
@@ -76,9 +77,10 @@ class DeviceController {
         return res.json(device)
     }
 
-    async deleteDevice(req, res) {
+    async delete(req, res) {
         try {
             const { id } = req.params;
+
             await Device.findOne({ where: { id } }).then(async data => {
                 if (data) {
                     await Device.destroy({ where: { id } }).then(() => {
@@ -88,7 +90,7 @@ class DeviceController {
                     return res.json('Данного продукта нет в базе данных')
                 }
 
-                await OrderDevice.destroy({ where: { device: id } })
+                await OrderDevice.destroy({ where: { deviceId: id } })
                 await CartDevice.destroy({ where: { deviceId: id } })
             })
         } catch (e) {

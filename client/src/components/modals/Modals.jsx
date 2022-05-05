@@ -1,12 +1,12 @@
 import { React, useContext, useState, useEffect } from 'react';
 import { ThemeContext } from '../..';
-import { createType, createBrand, createDevice, getTypes, getBrands } from '../../services/deviceAPI';
+import { createType, createBrand, createDevice, getTypes, getBrands, deleteType, deleteBrand } from '../../services/deviceAPI';
 
 import { observer } from 'mobx-react-lite';
 
 import './Modals.scss';
 
-export const Modals = observer(({ showProd, showType, showBrand, closeModal }) => {
+export const Modals = observer(({ showProd, showType, showBrand, showDeleteTypeBrand, closeModal }) => {
 
     const { device } = useContext(ThemeContext);
 
@@ -19,6 +19,12 @@ export const Modals = observer(({ showProd, showType, showBrand, closeModal }) =
 
     const [valueType, setValueType] = useState('');
     const [valueBrand, setValueBrand] = useState('');
+
+    const [deletedValue, setDeletedValue] = useState('');
+    const [selectedType, setSelectedType] = useState('');
+    const [selectedBrand, setSelectedBrand] = useState('');
+    const [messageAdmin, setMessageAdmin] = useState();
+
 
     useEffect(() => {
         getTypes().then(data => device.setTypes(data));
@@ -66,8 +72,24 @@ export const Modals = observer(({ showProd, showType, showBrand, closeModal }) =
         createDevice(formData).then(data => closeModal());
     }
 
+    const deleteTypeBrand = async () => {
+        if(deletedValue === 'brand') {
+            await deleteBrand(selectedBrand).then(() => {
+                setMessageAdmin(true);
+                setTimeout(closeModal, 2000);
+            })
+        } else if(deletedValue === 'type') {
+            await deleteType(selectedType).then(() => {
+                setMessageAdmin(true);
+                setTimeout(closeModal, 2000);
+            })
+        } else {
+            messageAdmin.value = 'Непредвиденная ошибка...'
+        }
+    }
+
     return (
-        <div className={showProd || showType || showBrand ? 'modalWrapper' : 'modalHidden'}>
+        <div className={showProd || showType || showBrand || showDeleteTypeBrand ? 'modalWrapper' : 'modalHidden'}>
             <div className="modal">
                 <div className='modalClose'>
                     <span onClick={closeModal}>X</span>
@@ -80,8 +102,8 @@ export const Modals = observer(({ showProd, showType, showBrand, closeModal }) =
                                 <option>{type || 'Выберете тип'}</option>
                                 {device.types.map(type =>
                                     <option
-                                    value={type.id}
-                                        key={type.id} 
+                                        value={type.id}
+                                        key={type.id}
                                     >
                                         {type.name}
                                     </option>
@@ -91,7 +113,7 @@ export const Modals = observer(({ showProd, showType, showBrand, closeModal }) =
                                 <option>{brand || 'Выберете брэнд'}</option>
                                 {device.brands.map(brand =>
                                     <option
-                                    value={brand.id}
+                                        value={brand.id}
                                         key={brand.id}
                                     >
                                         {brand.name}
@@ -155,7 +177,47 @@ export const Modals = observer(({ showProd, showType, showBrand, closeModal }) =
                                 />
                                 <button onClick={addBrand}>Добавить</button>
                             </div>
-                            : ''
+                            : showDeleteTypeBrand ?
+                                <div className='modalContent'>
+                                    <h3>Удаление типа или брэнда</h3>
+                                    <div className="menuSelect">
+                                        <select className='selectItem' onChange={(e) => setDeletedValue(e.target.value)}>
+                                            <option value="">Выберете категорию</option>
+                                            <option value="brand">Брэнд</option>
+                                            <option value="type">Тип</option>
+                                        </select>
+                                        {deletedValue === 'brand' ? (
+                                            <select className='selectItem' onChange={(e) => setSelectedBrand(e.target.value)}>
+                                                <option>{brand || 'Выберете брэнд'}</option>
+                                                {device.brands.map(brand =>
+                                                    <option
+                                                        value={brand.id}
+                                                        key={brand.id}
+                                                    >
+                                                        {brand.name}
+                                                    </option>
+                                                )}
+                                            </select>
+                                        ) : (deletedValue === 'type' ? (
+                                            <select className='selectItem' onChange={(e) => setSelectedType(e.target.value)}>
+                                                <option>{type || 'Выберете тип'}</option>
+                                                {device.types.map(type =>
+                                                    <option
+                                                        value={type.id}
+                                                        key={type.id}
+                                                    >
+                                                        {type.name}
+                                                    </option>
+                                                )}
+                                            </select>
+                                        ) : '')}
+                                    </div>
+                                    <div className="messageAdmin">
+                                        {messageAdmin ? 'Удаление прошло успешно' : ''}
+                                    </div>
+                                    <button onClick={deleteTypeBrand}>Удалить</button>
+                                </div>
+                                : ''
                 }
             </div>
         </div>

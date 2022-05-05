@@ -8,14 +8,39 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    min-height: 100%;
+    min-height: 80%;
 
     .modal {
         position: relative;
         margin-top: 20px;
-        border: 2px solid rgba(134, 100, 60, 0.8);
+        border: 2px solid #0db3df;
         border-radius: 10px;
         background-color: #FFFFFF;
+
+        .messageAdmin {
+            color: #336c98;
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .menuSelect {
+            display: flex;
+            justify-content: center;
+
+            select {
+                background-color: #336c98;
+                color: #FFFFFF;
+                border-radius: 10px;
+                padding: 5px;
+                margin-left: 5px;
+
+                option {
+                    color: #FFFFFF;
+                }
+            }
+        }
 
         .modalContent {
             display: flex;
@@ -28,21 +53,7 @@
             text-align: center;
             padding: 20px;
 
-            .menuSelect {
-                display: flex;
-                justify-content: space-evenly;
-
-                select {
-                    background-color: #336c98;
-                    color: #FFFFFF;
-                    border-radius: 10px;
-                    padding: 5px;
-
-                    option {
-                        color: #FFFFFF;
-                    }
-                }
-            }
+            
 
             .menuName {
                 input {

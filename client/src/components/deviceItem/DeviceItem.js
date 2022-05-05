@@ -12,7 +12,6 @@ import { observer } from 'mobx-react-lite';
 export const DeviceItem = observer(({ device, isLoading }) => {
 
   const { user, cart } = useContext(ThemeContext);
-  const { id } = useParams();
 
   const isDeviceInCart = () => {
     const findDevice = cart.Cart.finIndex(item => Number(item.id) === Number(device.id));
@@ -31,8 +30,8 @@ export const DeviceItem = observer(({ device, isLoading }) => {
     cart.setDeleteItemCart(device).then(() => cart.setCart(true))
   }
 
-  const deleteDeviceAdmin = (device) => {
-    deleteDevice(id);
+  const deleteDeviceAdmin = () => {
+    deleteDevice(device.id);
   }
 
 
@@ -57,7 +56,7 @@ export const DeviceItem = observer(({ device, isLoading }) => {
         <div>
           <img width={150} height={150} src={process.env.REACT_APP_API_URL + device.img} onClick={() => navigate(DEVICE_ROUTE + '/' + device.id)} alt='Фото продукта'/>
           <span className={user.isAdmin ? 'btnDeleteAdmin' : 'btnDeleteUser'}
-            onClick={user.isAdmin ? () => deleteDeviceAdmin : () => deleteDeviceCart(device)}
+            onClick={user.isAdmin ? deleteDeviceAdmin : deleteDeviceCart}
             title='Удалить товар'>x</span>
           <div className='deviceItemBottom'>
             <div className="deviceContent">

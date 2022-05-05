@@ -9,14 +9,17 @@ export const AdminPanel = () => {
   const [isProduct, setIsProduct] = useState(false);
   const [isType, setIsType] = useState(false);
   const [isBrand, setIsBrand] = useState(false);
+  const [isDeleteTypeBrand, setIsDeleteTypeBrand] = useState(false);
 
   const closeModal = () => {
     if (isProduct) {
-      setIsProduct(false)
+      setIsProduct(false);
     } else if (isType) {
-      setIsType(false)
+      setIsType(false);
     } else if (isBrand) {
-      setIsBrand(false)
+      setIsBrand(false);
+    } else if (isDeleteTypeBrand) {
+      setIsDeleteTypeBrand(false);
     }
   }
 
@@ -24,6 +27,13 @@ export const AdminPanel = () => {
     <>
       <div className="adminContainer">
       <Link to='/'><img src="/images/arrowLeft.svg" alt="Кнопка назад" /></Link>
+      <Modals
+          showProd={isProduct}
+          showType={isType}
+          showBrand={isBrand}
+          showDeleteTypeBrand={isDeleteTypeBrand}
+          closeModal={closeModal}
+        />
         <div className="AdminWrapper">
         <div className="statisticBlock">
             <ul>
@@ -38,13 +48,8 @@ export const AdminPanel = () => {
             <button className='typeBtn' onClick={() => setIsType(true)}>Добавить тип товара</button>
             <button className='brandBtn' onClick={() => setIsBrand(true)}>Добавить новый брэнд</button>
           </div>
+          <button className='deleteTypeBrand' onClick={() => setIsDeleteTypeBrand(true)}>Удалить тип или брэнд</button>
         </div>
-        <Modals
-          showProd={isProduct}
-          showType={isType}
-          showBrand={isBrand}
-          closeModal={closeModal}
-        />
       </div>
     </>
   )
