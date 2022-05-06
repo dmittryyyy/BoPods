@@ -5,7 +5,7 @@ import { DeviceItem } from '../deviceItem/DeviceItem';
 import { observer } from 'mobx-react-lite';
 
 
-export const DevicesList = observer(({ searchValue, isLoading }) => {
+export const DevicesList = observer(({ searchValue, isLoading, getAllProducts }) => {
 
   const { device } = useContext(ThemeContext);
 
@@ -17,7 +17,9 @@ export const DevicesList = observer(({ searchValue, isLoading }) => {
       <DeviceItem
         isLoading={isLoading}
         key={index}
-        device={device} />
+        device={device} 
+        getAllProducts={getAllProducts}
+        />
     )};
 
   return (

@@ -2,21 +2,20 @@ import { React, useContext } from 'react';
 
 import { DEVICE_ROUTE } from '../../utils/constants';
 import { ThemeContext } from '../..';
-import { addDeviceToCart, deleteDevice } from '../../services/deviceAPI';
+import { deleteDevice, getDeviceFromCart, addDeviceToCart, deleteDeviceFromCart,  } from '../../services/deviceAPI';
 
 import ContentLoader from 'react-content-loader';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 
-export const DeviceItem = observer(({ device, isLoading }) => {
+export const DeviceItem = observer(({ device, isLoading, getAllProducts }) => {
 
   const { user, cart } = useContext(ThemeContext);
 
-  const isDeviceInCart = () => {
-    const findDevice = cart.Cart.finIndex(item => Number(item.id) === Number(device.id));
-    return findDevice < 0;
-  }
+  const deleteDeviceAdmin = () => {
+    deleteDevice(device.id).then(() => getAllProducts());
+  };
 
   const addDeviceInCart = (device) => {
     if (user.isAuth) {
@@ -26,17 +25,17 @@ export const DeviceItem = observer(({ device, isLoading }) => {
     }
   }
 
-  const deleteDeviceCart = (device) => {
-    cart.setDeleteItemCart(device).then(() => cart.setCart(true))
+  const isDeviceInCart = () => {
+    const findDevice = cart.Cart.findIndex(item => Number(item.id) === Number(device.id));
+    return findDevice;
   }
 
-  const deleteDeviceAdmin = () => {
-    deleteDevice(device.id);
+  const deleteDeviceInCart = () => {
+    cart.setDeleteItemCart(device);
   }
-
 
   const navigate = useNavigate();
-
+  
   return (
     <div className='device'>
       {isLoading ? (
@@ -56,19 +55,20 @@ export const DeviceItem = observer(({ device, isLoading }) => {
         <div>
           <img width={150} height={150} src={process.env.REACT_APP_API_URL + device.img} onClick={() => navigate(DEVICE_ROUTE + '/' + device.id)} alt='Фото продукта'/>
           <span className={user.isAdmin ? 'btnDeleteAdmin' : 'btnDeleteUser'}
-            onClick={user.isAdmin ? deleteDeviceAdmin : deleteDeviceCart}
+            onClick={user.isAdmin ? deleteDeviceAdmin : deleteDeviceInCart}
             title='Удалить товар'>x</span>
           <div className='deviceItemBottom'>
             <div className="deviceContent">
               <h3>{device.name}</h3>
               <p>{device.price + ' руб'}</p>
             </div>
-            {isDeviceInCart ? (
+            {isDeviceInCart() ? (
               <button onClick={() => addDeviceInCart(device)}>+</button>
-            ) : (
+            
+            ):(
+
               <button className='buttonActive'>✓</button>
-            )
-            }
+            )}        
           </div>
         </div>
       )}

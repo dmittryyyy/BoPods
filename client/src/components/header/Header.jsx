@@ -43,6 +43,7 @@ export const Header = observer(() => {
             </nav>
           ) : (
             <nav>
+              <button onClick={() => navigate(CART_ROUTE)}>Корзина</button>
               <button onClick={() => navigate(LOGIN_ROUTE)}>Авторизация</button>
             </nav>
           ))}

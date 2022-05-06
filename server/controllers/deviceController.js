@@ -7,15 +7,14 @@ class DeviceController {
 
     async create(req, res, next) {
         try {
-            let { name, price, brandId, typeId, info, descr } = req.body
+            let { name, price, brandId, typeId, info } = req.body
             const { img } = req.files
             let fileName = uuid.v4() + '.jpg';
             img.mv(path.resolve(__dirname, '..', 'static', fileName));
             const device = await Device.create({ name, price, brandId, typeId, img: fileName })
 
-            if (info && descr) {
+            if (info) {
                 info = JSON.parse(info);
-                descr = JSON.parse(descr);
 
                 info.forEach(i =>
                     DeviceInfo.create({
@@ -23,12 +22,6 @@ class DeviceController {
                         description: i.description,
                         deviceId: device.id
                     })
-                )
-                descr.forEach(i =>
-                    DeviceDescripton.create({
-                        description: i.description,
-                        deviceId: device.id
-                    })    
                 )
             }
 

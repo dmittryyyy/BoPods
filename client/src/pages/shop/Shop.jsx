@@ -55,7 +55,6 @@ export const Shop = observer(() => {
 
         <TypeBar
           getAllProducts={getAllProducts}
-          allProducts={allProducts}
         />
 
       </div>
@@ -74,6 +73,7 @@ export const Shop = observer(() => {
           <DevicesList
             searchValue={searchValue}
             isLoading={isLoading}
+            getAllProducts={getAllProducts}
           />
           <Pages />
 

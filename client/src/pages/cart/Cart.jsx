@@ -1,27 +1,21 @@
-import { React, useContext, useState, useEffect } from 'react';
+import { React, useContext, useState } from 'react';
 
 import { СartInfo } from './CartInfo';
 import { DeviceItem } from '../../components/deviceItem/DeviceItem';
 import { ThemeContext } from '../..';
-import { getDeviceFromCart } from '../../services/deviceAPI';
 
 import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 import './Cart.scss';
 import '../shop/Shop.scss';
 
-export const Cart = () => {
+
+export const Cart = observer(() => {
 
   const { cart } = useContext(ThemeContext);
 
   const [isSending, setIsSending] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-
-  useEffect(() => {
-    getDeviceFromCart().then(data => {
-      cart.setCart(data);
-    })
-  })
 
   return (
     <div className="wrapperCart">
@@ -44,7 +38,10 @@ export const Cart = () => {
           <>
             <div className='products'>
               {cart.Cart.map(device =>
-                <DeviceItem key={device.id} device={device} />
+                <DeviceItem key={device.id} 
+                device={device} 
+                
+                />
               )}
             </div>
             <button>Оформить заказ</button>
@@ -53,11 +50,11 @@ export const Cart = () => {
           : <СartInfo
             title={isSending ? 'Заказ оформлен!' : 'Корзина пока пуста...'}
             img={isSending ? '/images/orderSuccess.png' : '/images/cartNull.jpg'}
-            descr={isSending ?  'Скоро с вами свяжутся для уточнения деталей заказа.' : 'Скоро с вами свяжутся для уточнения деталей заказа.'}
+            descr={isSending ?  'Скоро с вами свяжутся для уточнения деталей заказа.' : 'Добавьте что-нибудь в корзину.'}
           />
         }
       </div>
     </div>
   )
-}
+});
 

@@ -3,13 +3,9 @@ import { React, useContext } from 'react';
 
 import { ThemeContext } from '../..';
 
-export const TypeBar = observer ( ({ getAllProducts, allProducts }) => {
+export const TypeBar = observer ( ({ getAllProducts }) => {
 
     const { device } = useContext(ThemeContext);
-
-    const activeType = () => {
-        
-    }
     
   return (
     <>
