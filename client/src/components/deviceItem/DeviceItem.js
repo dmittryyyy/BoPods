@@ -2,7 +2,7 @@ import { React, useContext } from 'react';
 
 import { DEVICE_ROUTE } from '../../utils/constants';
 import { ThemeContext } from '../..';
-import { deleteDevice, getDeviceFromCart, addDeviceToCart, deleteDeviceFromCart,  } from '../../services/deviceAPI';
+import { deleteDevice, addDeviceToCart, deleteDeviceFromCart } from '../../services/deviceAPI';
 
 import ContentLoader from 'react-content-loader';
 import { useNavigate } from 'react-router-dom';
@@ -19,23 +19,32 @@ export const DeviceItem = observer(({ device, isLoading, getAllProducts }) => {
 
   const addDeviceInCart = (device) => {
     if (user.isAuth) {
-      addDeviceToCart(device).then(() => cart.setCart(device, true))
+      addDeviceToCart(device).then(() => cart.setCart(device));
     } else {
       cart.setCart(device);
+      localStorage.setItem("cart", JSON.stringify(cart.cart));
     }
+    cart.totalPrice += device.price;
   }
 
-  const isDeviceInCart = () => {
-    const findDevice = cart.Cart.findIndex(item => Number(item.id) === Number(device.id));
-    return findDevice;
-  }
+  // const isDeviceInCart = () => {
+  //     const findDevice = cart.setCart.findIndex(item => Number(item.id) === Number(device.id));
+  //     return findDevice < 0;
+  // }
 
-  const deleteDeviceInCart = () => {
-    cart.setDeleteItemCart(device);
-  }
+  const deleteDeviceInCart = (device) => {
+    if(user.isAuth) {
+      deleteDeviceFromCart(device.id).then(() => {
+        cart.cart.filter(item => item.id !== device.id);
+      })
+    } else if(!user.isAuth) {
+      cart.cart.filter(item => item.id !== device.id);
+      localStorage.removeItem('cart', (cart.cart));
+    }
+  };
 
   const navigate = useNavigate();
-  
+
   return (
     <div className='device'>
       {isLoading ? (
@@ -53,22 +62,23 @@ export const DeviceItem = observer(({ device, isLoading, getAllProducts }) => {
         </ContentLoader>
       ) : (
         <div>
-          <img width={150} height={150} src={process.env.REACT_APP_API_URL + device.img} onClick={() => navigate(DEVICE_ROUTE + '/' + device.id)} alt='Фото продукта'/>
+          <img width={150} height={150} src={process.env.REACT_APP_API_URL + device.img} onClick={() => navigate(DEVICE_ROUTE + '/' + device.id)} alt='Фото продукта' />
           <span className={user.isAdmin ? 'btnDeleteAdmin' : 'btnDeleteUser'}
-            onClick={user.isAdmin ? deleteDeviceAdmin : deleteDeviceInCart}
+            onClick={user.isAdmin ? deleteDeviceAdmin : () => deleteDeviceInCart(device)}
             title='Удалить товар'>x</span>
           <div className='deviceItemBottom'>
             <div className="deviceContent">
               <h3>{device.name}</h3>
               <p>{device.price + ' руб'}</p>
             </div>
-            {isDeviceInCart() ? (
+            <button onClick={() => addDeviceInCart(device)}>+</button>
+            {/* {isDeviceInCart() ? (
               <button onClick={() => addDeviceInCart(device)}>+</button>
             
             ):(
 
               <button className='buttonActive'>✓</button>
-            )}        
+            )}         */}
           </div>
         </div>
       )}

@@ -33,7 +33,6 @@ export const deleteBrand = async (id) => {
 }
 
 // Device
-
 export const createDevice = async (device) => {
     const {data} = await $authHost.post('api/device', device);
     return data;
@@ -61,25 +60,23 @@ export const updateDevices = async (id, body) => {
     return data;
 }
 
-export const getAllDevicesInAdminPage = async (name, page = 1, filter = "All") => {
-    const {data} = await $authHost({method:'GET', url:`api/device/search?page=${page}&name=${name}&filter=${filter}`});
-    return data;
-}
-
-
 //Cart
-
 export const addDeviceToCart = async (device) => {
     const {data} = await $authHost.post('api/cart', device);
     return data;
 }
 
-export const getDeviceFromCart = async () => {
+export const getDevicesFromCart = async () => {
     const {data} = await $authHost.get('api/cart');
     return data;
 }
 
 export const deleteDeviceFromCart = async (id) => {
+    const {data} = await $authHost.delete(`api/cart/${id}`);
+    return data;
+}
+
+export const deleteAllDeviceFromCart = async (id) => {
     const {data} = await $authHost.delete(`api/cart/${id}`);
     return data;
 }

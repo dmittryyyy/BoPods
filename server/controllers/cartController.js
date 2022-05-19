@@ -72,6 +72,24 @@ class CartController {
             console.error(e);
         }
     }
+
+    async deleteAllDevices(req, res) {
+        try {
+            const user = req.user;
+
+            await Cart.findOne({ where: { userId: user.id } }).then(async userCart => {
+                if (userCart.userId === user.id) {
+                    CartDevice.destroy({ where: { cartId: userCart.id, cartId: userCart.id } })
+                }
+                return res.json('Нет доступа')
+            });
+            return res.json('Товар удален из корзины!');
+        } catch (e) {
+            console.error(e);
+        }
+    }
 }
+
+
 
 module.exports = new CartController();

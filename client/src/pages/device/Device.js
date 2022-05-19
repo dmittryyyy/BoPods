@@ -12,7 +12,7 @@ export const Device = () => {
   const {id} = useParams();
 
   useEffect( () => {
-    getDevice(id).then(data => setIsDevice(data))
+    getDevice(id).then(data => setIsDevice(data));
   }, [])
 
   return (

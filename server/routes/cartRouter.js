@@ -4,8 +4,9 @@ const cartController = require('../controllers/cartController');
 const authMiddleware = require('../middleware/authMiddleware');
 const checkDeleteFromCart = require('../middleware/checkDeleteFromCart');
 
-router.post('/', authMiddleware, cartController.addDevice)
-router.get('/', authMiddleware, cartController.getDevices)
+router.post('/', authMiddleware, cartController.addDevice);
+router.get('/', authMiddleware, cartController.getDevices);
 router.delete('/:id', authMiddleware, checkDeleteFromCart, cartController.deleteDevice);
+router.delete('/:id', authMiddleware, cartController.deleteAllDevices);
 
 module.exports = router;
