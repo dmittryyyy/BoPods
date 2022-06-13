@@ -2,24 +2,66 @@ import { makeAutoObservable } from "mobx";
 
 export class CartStore {
     constructor() {
-        this._cart = [];
         this._totalPrice = 0;
+        this._cart = [];
+        this._keyName = 'cart';
         makeAutoObservable(this);
-    }
-
-    setCart(cart) {
-        this._cart = cart;
-    }
-
-    setPrice(price) {
-        this._price = price;
     }
 
     get cart() {
         return this._cart;
     }
 
-    get price() {
+    setCart(cart) {
+        this._cart = cart;
+    }
+
+    get totalPrice() {
         return this._totalPrice;
+    }
+
+    setTotalPrice(totalPrice) {
+        this._totalPrice = totalPrice;
+    }
+
+    getProduct() {
+        const productsLocalStorage = localStorage.getItem(this._keyName);
+        if (productsLocalStorage !== null) {
+            return JSON.parse(productsLocalStorage);
+        } else {
+            return [];
+        }
+    }
+
+    putProduct(id) {
+        let ItemsCart = this.getProduct();
+        let pushProduct = false;
+        const index = ItemsCart.findIndex((item) => Number(item.id) === Number(id.id));
+
+        if (index === -1) {
+            ItemsCart.push(id);
+            pushProduct = true;
+            this._totalPrice += Number(id.price);
+            this.setCart(ItemsCart);
+        } else {
+            ItemsCart.splice(index, 1);
+            this._totalPrice -= Number(id.price);
+            this.setCart(ItemsCart);
+        }
+
+        localStorage.setItem(this._keyName, JSON.stringify(ItemsCart));
+
+        return { pushProduct, ItemsCart }
+    }
+
+    deleteDeviceInCart(deviceItem, isAuth = false) {
+        if (isAuth) {
+            console.log('asfa')
+        } else {
+            this._cart = this._cart.filter(item => item.id !== deviceItem.id);
+            this._totalPrice -=  deviceItem.price;
+
+            localStorage.setItem("cart", JSON.stringify(this._cart));
+        }
     }
 }

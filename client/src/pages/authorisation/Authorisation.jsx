@@ -1,5 +1,5 @@
 import { React, useContext, useState } from 'react';
-import { Link, useLocation, useNavigate} from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { ADMIN_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from '../../utils/constants';
@@ -8,7 +8,7 @@ import { ThemeContext } from '../..';
 
 import './Authorisation.scss';
 
-export const Authorisation = observer( () => {
+export const Authorisation = observer(() => {
   const { user } = useContext(ThemeContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,8 +19,8 @@ export const Authorisation = observer( () => {
   const [password, setsetPassword] = useState('')
 
   const signIn = async () => {
+    let data;
     try {
-      let data;
       if (isLogin) {
         data = await login(email, password);
         if (email === 'admin@mail.ru') {

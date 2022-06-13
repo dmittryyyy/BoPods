@@ -75,8 +75,3 @@ export const deleteDeviceFromCart = async (id) => {
     const {data} = await $authHost.delete(`api/cart/${id}`);
     return data;
 }
-
-export const deleteAllDeviceFromCart = async (id) => {
-    const {data} = await $authHost.delete(`api/cart/${id}`);
-    return data;
-}

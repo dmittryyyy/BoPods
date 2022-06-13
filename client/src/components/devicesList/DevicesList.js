@@ -10,14 +10,14 @@ export const DevicesList = observer(({ searchValue, isLoading, getAllProducts })
   const { device } = useContext(ThemeContext);
 
   const renderProducts = () => {
-    const filterDevices = device.devices.filter(device =>
-      device.name.toLowerCase().includes(searchValue));
+    const filterDevices = device.devices.filter(itemSearch =>
+      itemSearch.name.toLowerCase().includes(searchValue));
 
-    return (isLoading ? [...Array(8)] : filterDevices).map((device, index) =>
+    return (isLoading ? [...Array(8)] : filterDevices).map((itemSearch, index) =>
       <DeviceItem
         isLoading={isLoading}
         key={index}
-        device={device} 
+        device={itemSearch} 
         getAllProducts={getAllProducts}
         />
     )};
