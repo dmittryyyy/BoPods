@@ -18,11 +18,12 @@ export const Shop = observer(() => {
   const [searchValue, setSearchValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-
   const getAllProducts = () => {
     getDevices(null, null, device.page, 9).then(data => {
       device.setDevices(data.rows);
       device.setTotalCount(data.count);
+      device.setSelectedBrand('');
+      device.setSelectedType('');
     });
   };
 
@@ -43,7 +44,6 @@ export const Shop = observer(() => {
       device.setTotalCount(data.count);
     })
   }, [device.selectedType, device.selectedBrand, device.page, 8]);
-
 
   return (
     <div className="wrapperShop">
@@ -71,6 +71,7 @@ export const Shop = observer(() => {
             isLoading={isLoading}
             getAllProducts={getAllProducts}
           />
+
           <Pages />
 
         </div>

@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import { deleteDeviceFromCart, addDeviceToCart } from '../services/deviceAPI';
 
 export class CartStore {
     constructor() {
@@ -54,13 +55,27 @@ export class CartStore {
         return { pushProduct, ItemsCart }
     }
 
-    deleteDeviceInCart(deviceItem, isAuth = false) {
+    setBasket(item, isAuth = false) {
+        const checkDeviceInBasket = this._cart.findIndex(device => device.id === item.id);
+        if (checkDeviceInBasket < 0) {
+            this._cart = [...this._cart, { count: 1, ...item }];
+            let totalPrice = 0;
+            this._cart.forEach(device => totalPrice += Number(device.price * device.count));
+            this._totalPrice = totalPrice;
+        }
+    }
+
+    async deleteDeviceInCart(deviceItem, isAuth = false) {
         if (isAuth) {
-            console.log('asfa')
+            await deleteDeviceFromCart(deviceItem.id).then(() => {
+                this._cart = this._cart.filter(item => item.id !== deviceItem.id);
+                this._totalPrice -= deviceItem.price;
+            });
         } else {
             this._cart = this._cart.filter(item => item.id !== deviceItem.id);
-            this._totalPrice -=  deviceItem.price;
+            this._totalPrice -= deviceItem.price;
 
+            localStorage.setItem('totalPrice', this._totalPrice);
             localStorage.setItem("cart", JSON.stringify(this._cart));
         }
     }

@@ -182,7 +182,7 @@ main {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 5px;
+                padding: 10px;
 
                 .deviceContent {
                     display: flex;
@@ -212,7 +212,6 @@ main {
                     font-weight: 600;
                     cursor: pointer;
                     border: 2px solid #FFF;
-                    transition: .3s;
                 }
 
                 button:hover {
@@ -226,7 +225,16 @@ main {
                     background-color: #0db3df;
                     color: #FFFFFF;
                     transition: .3s;
+                    font-size: 18px;
+                    padding: 10px;
+                    border-radius: 10px;
+                    font-weight: 600;
+                    cursor: pointer;
                 }
+            }
+
+            .countDevice {
+                display: none;
             }
         }
 

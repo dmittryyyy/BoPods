@@ -1,4 +1,4 @@
-const { Cart, CartDevice, Device, DeviceInfo} = require('../models/models');
+const { Cart, CartDevice, Device, DeviceInfo } = require('../models/models');
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 
@@ -11,8 +11,7 @@ class CartController {
             const user = jwt.verify(token, process.env.SECRET_KEY);
             const cart = await Cart.findOne({ where: { userId: user.id } });
             await CartDevice.create({ cartId: cart.id, deviceId: id });
-            return res.json('Добавлено в корзину!');
-
+            
         } catch (e) {
             console.error(e);
         }
@@ -49,7 +48,6 @@ class CartController {
                 );
                 cartArr.push(CartDevice);
             }
-
             return res.json(cartArr);
         } catch (e) {
             console.error(e)
@@ -64,24 +62,9 @@ class CartController {
             await Cart.findOne({ where: { userId: user.id } }).then(async userCart => {
                 if (userCart.userId === user.id) {
                     await CartDevice.destroy({ where: { cartId: userCart.id, deviceId: id } })
+                } else {
+                    return res.json('Нет доступа');
                 }
-                return res.json('Нет доступа')
-            });
-            return res.json('Товар удален из корзины!');
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    async deleteAllDevices(req, res) {
-        try {
-            const user = req.user;
-
-            await Cart.findOne({ where: { userId: user.id } }).then(async userCart => {
-                if (userCart.userId === user.id) {
-                    CartDevice.destroy({ where: { cartId: userCart.id, cartId: userCart.id } })
-                }
-                return res.json('Нет доступа')
             });
             return res.json('Товар удален из корзины!');
         } catch (e) {
@@ -89,7 +72,5 @@ class CartController {
         }
     }
 }
-
-
 
 module.exports = new CartController();

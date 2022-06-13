@@ -1,12 +1,11 @@
 const Router = require('express');
 const router = new Router();
-const cartController = require('../controllers/cartController');
-const authMiddleware = require('../middleware/authMiddleware');
+const CartController = require('../controllers/cartController');
 const checkDeleteFromCart = require('../middleware/checkDeleteFromCart');
+const authMeddleware = require('../middleware/authMiddleware');
 
-router.post('/', authMiddleware, cartController.addDevice);
-router.get('/', authMiddleware, cartController.getDevices);
-router.delete('/:id', authMiddleware, checkDeleteFromCart, cartController.deleteDevice);
-router.delete('/:id', authMiddleware, cartController.deleteAllDevices);
+router.post('/', authMeddleware, CartController.addDevice)
+router.get('/', authMeddleware, CartController.getDevices)
+router.delete('/:id', authMeddleware, CartController.deleteDevice)
 
 module.exports = router;

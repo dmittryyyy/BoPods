@@ -16,7 +16,7 @@ export const Header = observer(() => {
     user.setUser({});
     user.setIsAuth(false);
     user.setIsAdmin(false);
-    localStorage.clear();
+    localStorage.removeItem('token');
   }
 
   return (

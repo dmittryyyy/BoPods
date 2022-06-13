@@ -65,7 +65,7 @@ export const Cart = observer(() => {
                 />
               )}
             </div>
-            <button>Оформить заказ</button>
+            <button onClick={() => setIsSending(true)}>Оформить заказ</button>
           </>
 
           : <СartInfo
