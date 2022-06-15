@@ -36,14 +36,14 @@ export const Shop = observer(() => {
       device.setTotalCount(data.count);
     })
     setIsLoading(false);
-  }, []);
+  }, [device]);
 
   useEffect(() => {
     getDevices(device.selectedType.id, device.selectedBrand.id, device.page, 8).then(data => {
       device.setDevices(data.rows);
       device.setTotalCount(data.count);
     })
-  }, [device.selectedType, device.selectedBrand, device.page, 8]);
+  }, [device.selectedType, device.selectedBrand, device.page, device]);
 
   return (
     <div className="wrapperShop">

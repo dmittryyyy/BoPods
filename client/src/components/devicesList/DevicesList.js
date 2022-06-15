@@ -17,7 +17,7 @@ export const DevicesList = observer(({ searchValue, isLoading, getAllProducts })
       <DeviceItem
         isLoading={isLoading}
         key={index}
-        device={itemSearch} 
+        deviceOneItem={itemSearch} 
         getAllProducts={getAllProducts}
         />
     )};

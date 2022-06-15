@@ -3,7 +3,6 @@ import { React, useContext, useEffect, useState } from 'react';
 import { СartInfo } from './CartInfo';
 import { DeviceItem } from '../../components/deviceItem/DeviceItem';
 import { ThemeContext } from '../..';
-import { getDevicesFromCart } from '../../services/deviceAPI';
 
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
@@ -19,12 +18,11 @@ export const Cart = observer(() => {
 
   useEffect(() => {
     if (user.isAuth) {
-      getDevicesFromCart().then(cartData => cart.setCart(cartData));
+      cart.getCartData(true);
     } else {
-      cart.setCart(cart.getProduct());
-      cart.setTotalPrice(Number(localStorage.getItem('totalPrice')));
+      cart.getCartData();
     }
-  }, []);
+  }, [user.isAuth, cart]);
 
   const deleteAllDeviceFromCart = () => {
     if (user.isAuth) {
@@ -48,20 +46,20 @@ export const Cart = observer(() => {
 
       {cart.cart.length > 0 ? (
         <div className="cartTop">
-          <div className="totalPrice">{'Всего: ' + cart.totalPrice + ' руб.'}</div>
+          <div className="totalPrice">Всего: {cart._totalPrice} руб</div>
           <button onClick={() => deleteAllDeviceFromCart()} className='clearCart'>Очистить корзину</button>
         </div>
       ) : (
         '')}
 
       <div className='cartBlock container'>
-        {cart.cart.length > 0 ?
+        {cart.cart.length !== 0 ?
           <>
             <div className='products'>
               {cart.cart.map(device =>
                 <DeviceItem
                   key={device.id}
-                  device={device}
+                  deviceOneItem={device}
                 />
               )}
             </div>
