@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite';
 
 export const DevicesList = observer(({ searchValue, isLoading, getAllProducts }) => {
 
-  const { device } = useContext(ThemeContext);
+  const { device, cart } = useContext(ThemeContext);
 
   const renderProducts = () => {
     const filterDevices = device.devices.filter(itemSearch =>
@@ -24,7 +24,9 @@ export const DevicesList = observer(({ searchValue, isLoading, getAllProducts })
 
   return (
     <div className='products'>
+      
       {renderProducts()}
+     
     </div>
   )
 });

@@ -37,6 +37,7 @@ const Device = sequelize.define('device', {
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     price: {type: DataTypes.INTEGER, allowNull: false},
     img: {type: DataTypes.STRING, allowNull: false},
+    count: {type: DataTypes.INTEGER, allowNull:false, defaultValue: 1}
 });
 
 const Type = sequelize.define('type', {

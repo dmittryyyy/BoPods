@@ -38,7 +38,7 @@ export const AdminPanel = () => {
         <div className="statisticBlock">
             <ul>
               <li className='pos'>Количество посищений за месяц: {15}</li>
-              <li className='time'>Среднее время на сайте: {15}</li>
+              <li className='time'>Сделано заказов на {15} р</li>
               <li className='orders'>Общее количество заказов: {15}</li>
             </ul>
           </div>

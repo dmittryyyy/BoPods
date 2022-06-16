@@ -9,7 +9,7 @@ import './Header.scss';
 import { ADMIN_ROUTE, CART_ROUTE, LOGIN_ROUTE, ORDER_ROUTE } from '../../utils/constants';
 
 export const Header = observer(() => {
-  const { user } = useContext(ThemeContext);
+  const { user, cart } = useContext(ThemeContext);
   const navigate = useNavigate();
 
   const logOut = () => {
@@ -38,7 +38,7 @@ export const Header = observer(() => {
           ) : (user.isAuth ? (
             <nav>
                <button onClick={() => navigate(ORDER_ROUTE)}>Профиль</button>
-              <button onClick={() => navigate(CART_ROUTE)}>Корзина</button>
+              <button onClick={() => navigate(CART_ROUTE)}>Корзина <span className={cart.cart.length > 0 ? 'quantityCart' : ''}>{cart.cart.length > 0 ? cart.cart.length : ''}</span></button>
               <button onClick={() => logOut()}>Выйти</button>
             </nav>
           ) : (

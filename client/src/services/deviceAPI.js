@@ -71,6 +71,11 @@ export const getDevicesFromCart = async () => {
     return data;
 }
 
+export const updateDevice = async (device) => {
+    const {data} = await $authHost.put('api/cart', device);
+    return data;
+}
+
 export const deleteDeviceFromCart = async (id) => {
     const {data} = await $authHost.delete(`api/cart/${id}`);
     return data;

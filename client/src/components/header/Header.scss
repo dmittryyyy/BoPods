@@ -37,6 +37,7 @@ header {
 
         .headerRight {
             button {
+                position: relative;
                 background: #FFFFFF;
                 margin-right: 20px;
                 color: #254c55;
@@ -53,6 +54,20 @@ header {
                 color: #FFFFFF;
                 background: none;
                 transition: .3s;
+            }
+
+            .quantityCart {
+                position: absolute;
+                margin: 0 auto;
+                background-image: url('../../../public/images/sidebarBg.jpg');
+                background-repeat: no-repeat;
+                background-size: cover;
+                color: #000;
+                border: 1px solid #FFFFFF;
+                border-radius: 80px;
+                padding: 8px;
+                top: -30px;
+                left: 60px;
             }
         }
     }

@@ -55,9 +55,9 @@ export class CartStore {
         return { pushProduct, ItemsCart }
     }
 
-    getCartData(isAuth = false) {
+    async getCartData(isAuth = false) {
         if (isAuth) {
-            getDevicesFromCart().then(devices => this.setCart(devices));
+            await getDevicesFromCart().then(devices => this.setCart(devices));
         } else {
             this.setCart(this.getProduct());
             this.setTotalPrice(Number(localStorage.getItem('totalPrice')));
@@ -80,3 +80,4 @@ export class CartStore {
         }
     }
 }
+

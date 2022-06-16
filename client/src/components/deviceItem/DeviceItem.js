@@ -1,8 +1,8 @@
-import { React, useContext } from 'react';
+import { React, useContext, useEffect } from 'react';
 
 import { DEVICE_ROUTE } from '../../utils/constants';
 import { ThemeContext } from '../..';
-import { addDeviceToCart, deleteDevice } from '../../services/deviceAPI';
+import { addDeviceToCart, deleteDevice, updateDevice } from '../../services/deviceAPI';
 
 import ContentLoader from 'react-content-loader';
 import { useNavigate } from 'react-router-dom';
@@ -14,18 +14,26 @@ export const DeviceItem = observer(({ deviceOneItem, isLoading, getAllProducts }
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (user.isAuth) {
+      cart.getCartData(true);
+    } else {
+      cart.getCartData();
+    }
+  }, [user.isAuth, cart]);
+
   const isDeviceInCart = () => {
     return cart.cart.some((item) => Number(item.id) === Number(deviceOneItem.id));
   }
 
   const addDeviceInCart = (deviceItem) => {
     if (user.isAuth) {
-      const checkDeviceInCart = cart._cart.findIndex(device => device.id === deviceItem.id);
-      if (checkDeviceInCart < 0) {
-        addDeviceToCart(deviceItem).then(() => cart.setCart(deviceItem));
-        cart._cart = [...cart.cart, { ...deviceItem }];
+      const checkDeviceInBasket = cart._cart.findIndex(device => device.id === deviceItem.id);
+      if (checkDeviceInBasket < 0) {
+        cart._cart = [...cart._cart, { ...deviceItem }];
         cart._totalPrice += deviceItem.price;
         localStorage.setItem('totalPrice', cart._totalPrice);
+        addDeviceToCart(deviceItem).then(() => cart.setCart(deviceItem));
       }
     } else {
       cart.putProduct(deviceItem);
@@ -33,37 +41,35 @@ export const DeviceItem = observer(({ deviceOneItem, isLoading, getAllProducts }
     }
   }
 
-  const setCountDevice = (deviceItem, action) =>{
-    const itemId = cart._cart.findIndex(item => item.id === deviceItem.id);
-    const itemInState = cart._cart.find(device => device.id === deviceItem.id);
+  const setCountDevice = (deviceId, action) => {
+    const itemInd = cart._cart.findIndex(item => item.id === deviceId.id);
+    const itemInState = cart._cart.find(device => device.id === deviceId.id);
     if (action === "+") {
-      const newItem = {
-        ...itemInState,
-        count: itemInState.count++
-      }
-
-      cart._cart = [...cart._cart.slice(0, itemId), newItem, ...cart._cart.slice(itemId + 1)]
-      let totalPrice = Number(cart._totalPrice);
-      cart._cart.forEach(device => totalPrice += Number(device.price * device.count));
-      cart._totalPrice = totalPrice;
-
+      itemInState.count++;
+        const newItem = {
+            ...itemInState,
+        }
+        cart._cart = [...cart._cart.slice(0, itemInd), newItem, ...cart._cart.slice(itemInd + 1)]
+        localStorage.setItem('count', itemInState.count);
+        updateDevice(newItem);
     } else {
-      const newItem = {
-        ...itemInState,
-        count: itemInState.count === 1 ? 1 : itemInState.count--
-      }
-
-      cart._cart = [...cart._cart.slice(0, itemId), newItem, ...cart._cart.slice(itemId + 1)]
-      let totalPrice = Number(cart._totalPrice);
-      cart._cart.forEach(device => totalPrice -= Number(device.price * device.count));
-      cart._totalPrice = totalPrice;
+      itemInState.count--;
+        const newItem = {
+            ...itemInState,
+        }
+        cart._cart = [...cart._cart.slice(0, itemInd), newItem, ...cart._cart.slice(itemInd + 1)]
+        localStorage.setItem('count', itemInState.count);
     }
-    // localStorage.setItem('totalPrice', this._totalPrice);
 
-    if (!user.isAuth) {
-      localStorage.setItem("cart", JSON.stringify(cart._cart));
+    if(!user.isAuth) {
+        localStorage.setItem("basket", JSON.stringify(cart._cart));
     }
-  }
+
+    let totalPrice = 0;
+    cart._cart.forEach(device => totalPrice += Number(device.price * device.count));
+    cart._totalPrice = totalPrice;
+    localStorage.setItem('totalPrice', cart._totalPrice);
+}
 
   const deleteDeviceAdmin = async () => {
     await deleteDevice(deviceOneItem.id).then(() => getAllProducts());
@@ -104,12 +110,12 @@ export const DeviceItem = observer(({ deviceOneItem, isLoading, getAllProducts }
               <p>{deviceOneItem.price + ' руб'}</p>
             </div>
 
-            <button className={isDeviceInCart() ? 'buttonActive' : ''}
-              onClick={user.isAuth ? () => addDeviceInCart(deviceOneItem, true) : () => addDeviceInCart(deviceOneItem)}>{isDeviceInCart(deviceOneItem) ? '✓' : '+'}</button>
+            {!user.isAdmin ? <button className={isDeviceInCart() ? 'buttonActive' : ''}
+              onClick={user.isAuth ? () => addDeviceInCart(deviceOneItem, true) : () => addDeviceInCart(deviceOneItem)}>{isDeviceInCart(deviceOneItem) ? '✓' : '+'}</button> : ''}
 
             <div className="countDevice">
-              <img className='plusCount' onClick={() => setCountDevice(deviceOneItem, '-', true)} src="/images/plus.svg" alt="plus" />
-              <input type="number" value={deviceOneItem.count} onChange={(e) => setCountDevice(Number(e.target.value))}></input>
+              <img className='minusCount' onClick={() => setCountDevice(deviceOneItem, '-', true)} src="/images/minus.svg" alt="plus" />
+              <span>{Number(deviceOneItem.count)}</span>
               <img className='plusCount' onClick={() => setCountDevice(deviceOneItem, '+', true)} src="/images/plus.svg" alt="plus" />
             </div>
           </div>

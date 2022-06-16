@@ -43,7 +43,7 @@ export const Shop = observer(() => {
       device.setDevices(data.rows);
       device.setTotalCount(data.count);
     })
-  }, [device.selectedType, device.selectedBrand, device.page, device]);
+  }, [device.selectedType, device.selectedBrand, device.page, device,]);
 
   return (
     <div className="wrapperShop">

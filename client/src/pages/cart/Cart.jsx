@@ -44,17 +44,15 @@ export const Cart = observer(() => {
         className='btnBack'
       /></Link>
 
-      {cart.cart.length > 0 ? (
-        <div className="cartTop">
-          <div className="totalPrice">Всего: {cart._totalPrice} руб</div>
-          <button onClick={() => deleteAllDeviceFromCart()} className='clearCart'>Очистить корзину</button>
-        </div>
-      ) : (
-        '')}
+      {cart._cart.length > 0 ? (
+        <>
+          <div className="cartTop">
+            <div className="totalPrice">Всего: {cart._totalPrice} руб</div>
+            <button onClick={() => deleteAllDeviceFromCart()} className='clearCart'>Очистить корзину</button>
+          </div>
 
-      <div className='cartBlock container'>
-        {cart.cart.length !== 0 ?
-          <>
+          <div className='cartBlock container'>
+
             <div className='products'>
               {cart.cart.map(device =>
                 <DeviceItem
@@ -64,15 +62,18 @@ export const Cart = observer(() => {
               )}
             </div>
             <button onClick={() => setIsSending(true)}>Оформить заказ</button>
-          </>
+          </div>
+        </>
 
-          : <СartInfo
+      ) : (
+
+        <div className='cartBlock container'>
+          <СartInfo
             title={isSending ? 'Заказ оформлен!' : 'Корзина пока пуста...'}
             img={isSending ? '/images/orderSuccess.png' : '/images/cartNull.jpg'}
-            descr={isSending ? 'Скоро с вами свяжутся для уточнения деталей заказа.' : 'Добавьте что-нибудь в корзину.'}
-          />
-        }
-      </div>
+            descr={isSending ? 'Скоро с вами свяжутся для уточнения деталей заказа.' : 'Добавьте что-нибудь в корзину.'} />
+        </div>)}
+
     </div>
   )
 });
