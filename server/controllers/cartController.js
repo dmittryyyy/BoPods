@@ -71,6 +71,34 @@ class CartController {
             console.error(e);
         }
     }
+
+    async updateCountDevice(req, res) {
+        try {
+            const { id } = req.params;
+            const { brandId, typeId, name, price, count, } = req.body;
+
+            await Device.findOne({ where: { id } }).then(async data => {
+                if (data) {
+                    let newVal = {};
+                    brandId ? newVal.brandId = brandId : false;
+                    typeId ? newVal.typeId = typeId : false;
+                    name ? newVal.name = name : false;
+                    price ? newVal.price = price : false;
+                    count ? newVal.count = count : false;
+
+                    await Device.update({
+                        ...newVal
+                    }, { where: { id } }).then(() => {
+                        return res.json('Информация обновлена')
+                    })
+                } else {
+                    return res.json('Данный продукта нет в БД')
+                }
+            })
+        } catch (e) {
+            next(ApiError.badRequest(e.message));
+        }
+    }
 }
 
 module.exports = new CartController();

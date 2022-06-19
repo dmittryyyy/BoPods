@@ -35,7 +35,6 @@ export const Cart = observer(() => {
       cart.setTotalPrice(0);
     }
   }
-
   return (
     <div className="wrapperCart">
 

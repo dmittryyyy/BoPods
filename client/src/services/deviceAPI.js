@@ -55,11 +55,6 @@ export const deleteDevice = async (id) => {
     return data;
 }
 
-export const updateDevices = async (id, body) => {
-    const {data} = await $authHost({method:'PUT', url:`api/device/${id}`, data: body});
-    return data;
-}
-
 //Cart
 export const addDeviceToCart = async (device) => {
     const {data} = await $authHost.post('api/cart', device);
@@ -71,12 +66,12 @@ export const getDevicesFromCart = async () => {
     return data;
 }
 
-export const updateDevice = async (device) => {
-    const {data} = await $authHost.put('api/cart', device);
+export const deleteDeviceFromCart = async (id) => {
+    const {data} = await $authHost.delete(`api/cart/${id}`);
     return data;
 }
 
-export const deleteDeviceFromCart = async (id) => {
-    const {data} = await $authHost.delete(`api/cart/${id}`);
+export const updateDevices = async (id, body) => {
+    const {data} = await $authHost({method:'PUT', url:`api/cart/${id}`, data: body});
     return data;
 }

@@ -15,21 +15,21 @@ const Cart = sequelize.define('cart', {
 
 const CartDevice = sequelize.define('cart_device', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    deviceId: {type: DataTypes.INTEGER}
+    deviceId: {type: DataTypes.INTEGER},
+    count: {type: DataTypes.INTEGER, allowNull:false, defaultValue: 1}
 });
 
 const Orders = sequelize.define('orders', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     complete: {type: DataTypes.BOOLEAN, defaultValue: false},
     mobile: {type: DataTypes.STRING(25), allowNull: false},
-    userId: {type: DataTypes.INTEGER, allowNull: true}
+    userId: {type: DataTypes.INTEGER, allowNull: true},
 });
 
 const OrderDevice = sequelize.define('orders_device', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     deviceId: {type: DataTypes.INTEGER, allowNull: false},
     orderId: {type: DataTypes.INTEGER, allowNull: false},
-    count: {type: DataTypes.INTEGER, allowNull: false}
 });
 
 const Device = sequelize.define('device', {

@@ -2,7 +2,7 @@ import { React, useContext, useEffect } from 'react';
 
 import { DEVICE_ROUTE } from '../../utils/constants';
 import { ThemeContext } from '../..';
-import { addDeviceToCart, deleteDevice, updateDevice } from '../../services/deviceAPI';
+import { addDeviceToCart, deleteDevice, updateDevices } from '../../services/deviceAPI';
 
 import ContentLoader from 'react-content-loader';
 import { useNavigate } from 'react-router-dom';
@@ -39,36 +39,51 @@ export const DeviceItem = observer(({ deviceOneItem, isLoading, getAllProducts }
       cart.putProduct(deviceItem);
       localStorage.setItem('totalPrice', cart._totalPrice);
     }
+    cart.getCountDeviceInCart();
   }
 
   const setCountDevice = (deviceId, action) => {
     const itemInd = cart._cart.findIndex(item => item.id === deviceId.id);
     const itemInState = cart._cart.find(device => device.id === deviceId.id);
-    if (action === "+") {
-      itemInState.count++;
-        const newItem = {
-            ...itemInState,
-        }
-        cart._cart = [...cart._cart.slice(0, itemInd), newItem, ...cart._cart.slice(itemInd + 1)]
-        localStorage.setItem('count', itemInState.count);
-        updateDevice(newItem);
+    if(user.isAuth) {
+      if (action === "+") {
+        itemInState.count++;
+          const newItem = {
+              ...itemInState,
+          }
+          cart._cart = [...cart._cart.slice(0, itemInd), newItem, ...cart._cart.slice(itemInd + 1)]
+          updateDevices(deviceId.id, newItem)
+      } else {
+        itemInState.count--;
+          const newItem = {
+              ...itemInState,
+          }
+          cart._cart = [...cart._cart.slice(0, itemInd), newItem, ...cart._cart.slice(itemInd + 1)]
+          updateDevices(deviceId.id, newItem)
+      }
     } else {
-      itemInState.count--;
-        const newItem = {
-            ...itemInState,
-        }
-        cart._cart = [...cart._cart.slice(0, itemInd), newItem, ...cart._cart.slice(itemInd + 1)]
-        localStorage.setItem('count', itemInState.count);
-    }
-
-    if(!user.isAuth) {
-        localStorage.setItem("basket", JSON.stringify(cart._cart));
+      if (action === "+") {
+        itemInState.count++;
+          const newItem = {
+              ...itemInState,
+          }
+          cart._cart = [...cart._cart.slice(0, itemInd), newItem, ...cart._cart.slice(itemInd + 1)]
+          localStorage.setItem('cart', JSON.stringify(cart._cart));
+      } else {
+        itemInState.count--;
+          const newItem = {
+              ...itemInState,
+          }
+          cart._cart = [...cart._cart.slice(0, itemInd), newItem, ...cart._cart.slice(itemInd + 1)]
+          localStorage.setItem('cart', JSON.stringify(cart._cart));
+      }
     }
 
     let totalPrice = 0;
     cart._cart.forEach(device => totalPrice += Number(device.price * device.count));
     cart._totalPrice = totalPrice;
     localStorage.setItem('totalPrice', cart._totalPrice);
+    cart.getCountDeviceInCart();
 }
 
   const deleteDeviceAdmin = async () => {

@@ -90,61 +90,6 @@ class DeviceController {
             next(ApiError.badRequest(e.message));
         }
     }
-
-    async update(req, res) {
-        try {
-            const { id } = req.params;
-            const { brandId, typeId, name, price, info, descr } = req.body;
-
-            await Device.findOne({ where: { id } }).then(async data => {
-                if (data) {
-                    let newVal = {};
-                    brandId ? newVal.brandId = brandId : false;
-                    typeId ? newVal.typeId = typeId : false;
-                    name ? newVal.name = name : false;
-                    price ? newVal.price = price : false;
-
-                    if (req.files) {
-                        const { img } = req.files;
-                        const type = img.mimetype.split('/')[1];
-                        let fileName = uuid.v4() + `.${type}`;
-                        img.mv(path.resolve(__dirname, '..', 'static', fileName));
-                        newVal.img = fileName;
-                    }
-
-                    if (info) {
-                        const parseInfo = JSON.parse(info);
-                        for (const item of parseInfo) {
-                            await DeviceInfo.findOne({ where: { id: item.id } }).then(async data => {
-                                if (data) {
-                                    await DeviceInfo.update({
-                                        title: item.title,
-                                        description: item.description
-                                    }, { where: { id: item.id } })
-                                } else {
-                                    await DeviceInfo.create({
-                                        title: item.title,
-                                        description: item.description,
-                                        deviceId: id
-                                    })
-                                }
-                            }
-                            )
-                        }
-                    }
-                    await Device.update({
-                        ...newVal
-                    }, { where: { id } }).then(() => {
-                        return res.json('Информация обновлена')
-                    })
-                } else {
-                    return res.json('Данный продукта нет в БД')
-                }
-            })
-        } catch (e) {
-            next(ApiError.badRequest(e.message));
-        }
-    }
 }
 
 module.exports = new DeviceController();

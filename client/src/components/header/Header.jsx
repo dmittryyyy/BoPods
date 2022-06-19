@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import { React, useContext, useState } from 'react';
 import { ThemeContext } from '../..';
 
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router';
-
-import './Header.scss';
 import { ADMIN_ROUTE, CART_ROUTE, LOGIN_ROUTE, ORDER_ROUTE } from '../../utils/constants';
 
+import './Header.scss';
+
 export const Header = observer(() => {
+
   const { user, cart } = useContext(ThemeContext);
   const navigate = useNavigate();
 
@@ -37,13 +38,22 @@ export const Header = observer(() => {
             </nav>
           ) : (user.isAuth ? (
             <nav>
-               <button onClick={() => navigate(ORDER_ROUTE)}>Профиль</button>
-              <button onClick={() => navigate(CART_ROUTE)}>Корзина <span className={cart.cart.length > 0 ? 'quantityCart' : ''}>{cart.cart.length > 0 ? cart.cart.length : ''}</span></button>
+              <button onClick={() => navigate(ORDER_ROUTE)}>Профиль</button>
+              
+              <button onClick={() => navigate(CART_ROUTE)}>Корзина<span
+                className={cart.cart.length > 0 ? 'quantityCart' : ''}>
+                {cart.countElemInCart ? cart.countElemInCart : cart.cart.length ? cart.cart.length : ''}
+              </span></button>
+
               <button onClick={() => logOut()}>Выйти</button>
             </nav>
           ) : (
             <nav>
-              <button onClick={() => navigate(CART_ROUTE)}>Корзина</button>
+              <button onClick={() => navigate(CART_ROUTE)}>Корзина<span
+                className={cart.cart.length > 0 ? 'quantityCart' : ''}>
+                {cart.countElemInCart ? cart.countElemInCart : cart.cart.length ? cart.cart.length : ''}
+              </span></button>
+
               <button onClick={() => navigate(LOGIN_ROUTE)}>Авторизация</button>
             </nav>
           ))}

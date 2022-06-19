@@ -7,9 +7,8 @@ import { Footer } from '../footer/Footer';
 import { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '../..';
 
-import './App.scss';
 import { check } from '../../services/userAPI';
-
+import './App.scss';
 
 export const App = observer(() => {
   const { user } = useContext(ThemeContext)

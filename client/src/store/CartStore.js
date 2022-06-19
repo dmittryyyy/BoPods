@@ -1,16 +1,25 @@
 import { makeAutoObservable } from "mobx";
-import { deleteDeviceFromCart, getDevicesFromCart } from '../services/deviceAPI';
+import { deleteDeviceFromCart, getDevicesFromCart, updateDevices } from '../services/deviceAPI';
 
 export class CartStore {
     constructor() {
         this._totalPrice = 0;
         this._cart = [];
         this._keyName = 'cart';
+        this._countElemInCart = 0;
         makeAutoObservable(this);
     }
 
     get cart() {
         return this._cart;
+    }
+
+    get countElemInCart() {
+        return this._countElemInCart;
+    }
+
+    setCountElemInCart(countElemInCart) {
+        this._countElemInCart = countElemInCart;
     }
 
     setCart(cart) {
@@ -68,16 +77,27 @@ export class CartStore {
         if (isAuth) {
             await deleteDeviceFromCart(deviceItem.id).then(() => {
                 this._cart = this._cart.filter(item => item.id !== deviceItem.id);
-                this._totalPrice -= deviceItem.price;
-                localStorage.setItem('totalPrice', this._totalPrice);
             });
         } else {
             this._cart = this._cart.filter(item => item.id !== deviceItem.id);
-            this._totalPrice -= deviceItem.price;
-
-            localStorage.setItem('totalPrice', this._totalPrice);
             localStorage.setItem("cart", JSON.stringify(this._cart));
         }
+        this._totalPrice -= deviceItem.price * deviceItem.count;
+        this._countElemInCart -= deviceItem.count;
+        deviceItem.count = 1;
+        const newItem = {
+            ...deviceItem,
+        }
+        updateDevices(deviceItem.id, newItem)
+        localStorage.setItem('totalPrice', this._totalPrice);
+    }
+
+    getCountDeviceInCart() {
+        let array = 0;
+        this.cart.map(item => {
+            array += item.count;
+        });
+        this.setCountElemInCart(array);
     }
 }
 

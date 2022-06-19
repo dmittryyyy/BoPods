@@ -57,17 +57,17 @@ header {
             }
 
             .quantityCart {
+                font-size: 14px;
                 position: absolute;
                 margin: 0 auto;
                 background-image: url('../../../public/images/sidebarBg.jpg');
                 background-repeat: no-repeat;
                 background-size: cover;
-                color: #000;
-                border: 1px solid #FFFFFF;
-                border-radius: 80px;
-                padding: 8px;
-                top: -30px;
-                left: 60px;
+                color: #fff;
+                border-radius: 5px;
+                padding: 5px;
+                top: -15px;
+                left: 80px;
             }
         }
     }
