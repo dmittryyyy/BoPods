@@ -13,7 +13,7 @@ import { Pages } from './Pages';
 import './Shop.scss';
 
 export const Shop = observer(() => {
-  const { device } = useContext(ThemeContext);
+  const { device, cart, user } = useContext(ThemeContext);
 
   const [searchValue, setSearchValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +29,11 @@ export const Shop = observer(() => {
 
   useEffect(() => {
     setIsLoading(true);
+    if (user.isAuth) {
+      cart.getCartData(true);
+    } else {
+      cart.getCartData();
+    }
     getTypes().then(data => device.setTypes(data));
     getBrands().then(data => device.setBrands(data));
     getDevices(null, null, 1, 9).then(data => {

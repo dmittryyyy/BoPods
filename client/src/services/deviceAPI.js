@@ -75,3 +75,5 @@ export const updateDevices = async (id, body) => {
     const {data} = await $authHost({method:'PUT', url:`api/cart/${id}`, data: body});
     return data;
 }
+
+//orders

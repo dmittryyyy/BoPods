@@ -125,7 +125,6 @@
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
-                        margin: 0px 20px;
 
                         span {
                             font-size: 20px;
@@ -135,6 +134,7 @@
                         .minusCount,
                         .plusCount {
                             max-width: 30px;
+                            margin-bottom: 0;
                         }
 
                         .minusCount:hover,

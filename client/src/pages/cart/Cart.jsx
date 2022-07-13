@@ -24,17 +24,18 @@ export const Cart = observer(() => {
     }
   }, [user.isAuth, cart]);
 
-  const deleteAllDeviceFromCart = () => {
+  const deleteAllDeviceFromCart = async () => {
     if (user.isAuth) {
-
-      cart.setCart([]);
-      cart.setTotalPrice(0);
+      cart.cart.map(async (item) => {
+        cart.deleteDeviceInCart(item, true);
+      });
     } else {
       localStorage.clear();
-      cart.setCart([]);
-      cart.setTotalPrice(0);
     }
-  }
+    cart.setCart([]);
+    cart.calculatePriceAndCountsProductInCart();
+  };
+
   return (
     <div className="wrapperCart">
 
@@ -46,7 +47,7 @@ export const Cart = observer(() => {
       {cart._cart.length > 0 ? (
         <>
           <div className="cartTop">
-            <div className="totalPrice">Всего: {cart._totalPrice} руб</div>
+            <div className="totalPrice">Всего: {cart.totalPrice} руб</div>
             <button onClick={() => deleteAllDeviceFromCart()} className='clearCart'>Очистить корзину</button>
           </div>
 
@@ -69,7 +70,7 @@ export const Cart = observer(() => {
         <div className='cartBlock container'>
           <СartInfo
             title={isSending ? 'Заказ оформлен!' : 'Корзина пока пуста...'}
-            img={isSending ? '/images/orderSuccess.png' : '/images/cartNull.jpg'}
+            img={isSending ? 'images/orderSuccess.png' : 'images/cartNull.jpg'}
             descr={isSending ? 'Скоро с вами свяжутся для уточнения деталей заказа.' : 'Добавьте что-нибудь в корзину.'} />
         </div>)}
 

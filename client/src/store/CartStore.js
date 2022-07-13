@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { action, flow, makeAutoObservable } from "mobx";
 import { deleteDeviceFromCart, getDevicesFromCart, updateDevices } from '../services/deviceAPI';
 
 export class CartStore {
@@ -7,32 +7,34 @@ export class CartStore {
         this._cart = [];
         this._keyName = 'cart';
         this._countElemInCart = 0;
-        makeAutoObservable(this);
-    }
+        makeAutoObservable(this, {
+            deleteDeviceInCart: flow
+        });
+    };
 
     get cart() {
         return this._cart;
-    }
+    };
 
     get countElemInCart() {
         return this._countElemInCart;
-    }
+    };
 
     setCountElemInCart(countElemInCart) {
         this._countElemInCart = countElemInCart;
-    }
+    };
 
     setCart(cart) {
         this._cart = cart;
-    }
+    };
 
     get totalPrice() {
         return this._totalPrice;
-    }
+    };
 
     setTotalPrice(totalPrice) {
         this._totalPrice = totalPrice;
-    }
+    };
 
     getProduct() {
         const productsLocalStorage = localStorage.getItem(this._keyName);
@@ -41,7 +43,7 @@ export class CartStore {
         } else {
             return [];
         }
-    }
+    };
 
     putProduct(id) {
         let ItemsCart = this.getProduct();
@@ -62,42 +64,46 @@ export class CartStore {
         localStorage.setItem(this._keyName, JSON.stringify(ItemsCart));
 
         return { pushProduct, ItemsCart }
-    }
+    };
 
     async getCartData(isAuth = false) {
         if (isAuth) {
             await getDevicesFromCart().then(devices => this.setCart(devices));
         } else {
             this.setCart(this.getProduct());
-            this.setTotalPrice(Number(localStorage.getItem('totalPrice')));
         }
+        this.calculatePriceAndCountsProductInCart();
     };
 
-    async deleteDeviceInCart(deviceItem, isAuth = false) {
+    *deleteDeviceInCart (deviceItem, isAuth = false) {
         if (isAuth) {
-            await deleteDeviceFromCart(deviceItem.id).then(() => {
+            yield deleteDeviceFromCart(deviceItem.id).then(action(() => {
                 this._cart = this._cart.filter(item => item.id !== deviceItem.id);
-            });
+                this._totalPrice -= deviceItem.price * deviceItem.count;
+            }));
         } else {
             this._cart = this._cart.filter(item => item.id !== deviceItem.id);
+            this._totalPrice -= deviceItem.price * deviceItem.count;
             localStorage.setItem("cart", JSON.stringify(this._cart));
         }
-        this._totalPrice -= deviceItem.price * deviceItem.count;
         this._countElemInCart -= deviceItem.count;
         deviceItem.count = 1;
         const newItem = {
             ...deviceItem,
         }
-        updateDevices(deviceItem.id, newItem)
-        localStorage.setItem('totalPrice', this._totalPrice);
-    }
+        updateDevices(deviceItem.id, newItem);
+        this.calculatePriceAndCountsProductInCart();
+    };
 
-    getCountDeviceInCart() {
+    calculatePriceAndCountsProductInCart() {
         let array = 0;
+        let price = 0;
         this.cart.map(item => {
             array += item.count;
+            price += item.price * item.count;
         });
         this.setCountElemInCart(array);
+        this.setTotalPrice(price);
     }
 }
 

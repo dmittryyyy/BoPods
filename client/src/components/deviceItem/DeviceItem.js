@@ -7,6 +7,7 @@ import { addDeviceToCart, deleteDevice, updateDevices } from '../../services/dev
 import ContentLoader from 'react-content-loader';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { action } from 'mobx';
 
 export const DeviceItem = observer(({ deviceOneItem, isLoading, getAllProducts }) => {
 
@@ -26,69 +27,51 @@ export const DeviceItem = observer(({ deviceOneItem, isLoading, getAllProducts }
     return cart.cart.some((item) => Number(item.id) === Number(deviceOneItem.id));
   }
 
-  const addDeviceInCart = (deviceItem) => {
-    if (user.isAuth) {
-      const checkDeviceInBasket = cart._cart.findIndex(device => device.id === deviceItem.id);
-      if (checkDeviceInBasket < 0) {
-        cart._cart = [...cart._cart, { ...deviceItem }];
-        cart._totalPrice += deviceItem.price;
-        localStorage.setItem('totalPrice', cart._totalPrice);
+  const addDeviceInCart = action((deviceItem) => {
+    const checkDeviceInBasket = cart._cart.findIndex(device => device.id === deviceItem.id);
+    if (checkDeviceInBasket < 0) {
+      cart._cart = [...cart._cart, { ...deviceItem }];
+      cart._totalPrice += deviceItem.price;
+      if (user.isAuth) {
         addDeviceToCart(deviceItem).then(() => cart.setCart(deviceItem));
+      } else {
+        cart.putProduct(deviceItem);
       }
     } else {
-      cart.putProduct(deviceItem);
-      localStorage.setItem('totalPrice', cart._totalPrice);
+      cart.deleteDeviceInCart(deviceItem, user.isAuth ? true : false);
     }
-    cart.getCountDeviceInCart();
-  }
+    cart.calculatePriceAndCountsProductInCart();
+  });
 
-  const setCountDevice = (deviceId, action) => {
-    const itemInd = cart._cart.findIndex(item => item.id === deviceId.id);
+  const setCountDevice = action((deviceId, action) => {
+    const itemId = cart._cart.findIndex(item => item.id === deviceId.id);
     const itemInState = cart._cart.find(device => device.id === deviceId.id);
-    if(user.isAuth) {
-      if (action === "+") {
-        itemInState.count++;
-          const newItem = {
-              ...itemInState,
-          }
-          cart._cart = [...cart._cart.slice(0, itemInd), newItem, ...cart._cart.slice(itemInd + 1)]
-          updateDevices(deviceId.id, newItem)
-      } else {
-        itemInState.count--;
-          const newItem = {
-              ...itemInState,
-          }
-          cart._cart = [...cart._cart.slice(0, itemInd), newItem, ...cart._cart.slice(itemInd + 1)]
-          updateDevices(deviceId.id, newItem)
-      }
+    if (action === "+") {
+      itemInState.count++;
     } else {
-      if (action === "+") {
+      itemInState.count--;
+      if (itemInState.count < 1) {
         itemInState.count++;
-          const newItem = {
-              ...itemInState,
-          }
-          cart._cart = [...cart._cart.slice(0, itemInd), newItem, ...cart._cart.slice(itemInd + 1)]
-          localStorage.setItem('cart', JSON.stringify(cart._cart));
-      } else {
-        itemInState.count--;
-          const newItem = {
-              ...itemInState,
-          }
-          cart._cart = [...cart._cart.slice(0, itemInd), newItem, ...cart._cart.slice(itemInd + 1)]
-          localStorage.setItem('cart', JSON.stringify(cart._cart));
       }
     }
-
+    const newItem = {
+      ...itemInState,
+    }
+    cart._cart = [...cart._cart.slice(0, itemId), newItem, ...cart._cart.slice(itemId + 1)]
     let totalPrice = 0;
-    cart._cart.forEach(device => totalPrice += Number(device.price * device.count));
+    cart._cart.forEach((device) => totalPrice += Number(device.price * device.count));
     cart._totalPrice = totalPrice;
-    localStorage.setItem('totalPrice', cart._totalPrice);
-    cart.getCountDeviceInCart();
-}
+    if (user.isAuth) {
+      updateDevices(deviceId.id, newItem)
+    } else {
+      localStorage.setItem('cart', JSON.stringify(cart._cart));
+    }
+    cart.calculatePriceAndCountsProductInCart();
+  });
 
-  const deleteDeviceAdmin = async () => {
+  const deleteDeviceAdmin = action(async () => {
     await deleteDevice(deviceOneItem.id).then(() => getAllProducts());
-  };
+  });
 
   return (
     <div className='device'>
@@ -129,9 +112,9 @@ export const DeviceItem = observer(({ deviceOneItem, isLoading, getAllProducts }
               onClick={user.isAuth ? () => addDeviceInCart(deviceOneItem, true) : () => addDeviceInCart(deviceOneItem)}>{isDeviceInCart(deviceOneItem) ? '✓' : '+'}</button> : ''}
 
             <div className="countDevice">
-              <img className='minusCount' onClick={() => setCountDevice(deviceOneItem, '-', true)} src="/images/minus.svg" alt="plus" />
+              <img className='minusCount' onClick={() => setCountDevice(deviceOneItem, '-', true)} src="images/minus.svg" alt="plus" />
               <span>{Number(deviceOneItem.count)}</span>
-              <img className='plusCount' onClick={() => setCountDevice(deviceOneItem, '+', true)} src="/images/plus.svg" alt="plus" />
+              <img className='plusCount' onClick={() => setCountDevice(deviceOneItem, '+', true)} src="images/plus.svg" alt="plus" />
             </div>
           </div>
         </div>

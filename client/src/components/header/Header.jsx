@@ -51,7 +51,7 @@ export const Header = observer(() => {
             <nav>
               <button onClick={() => navigate(CART_ROUTE)}>Корзина<span
                 className={cart.cart.length > 0 ? 'quantityCart' : ''}>
-                {cart.countElemInCart ? cart.countElemInCart : cart.cart.length ? cart.cart.length : ''}
+                {cart.countElemInCart ? cart.countElemInCart : ''}
               </span></button>
 
               <button onClick={() => navigate(LOGIN_ROUTE)}>Авторизация</button>
